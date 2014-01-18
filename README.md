@@ -6,5 +6,11 @@
 # Movies
 
 - The Road (http://www.imdb.com/title/tt0898367/?ref_=nv_sr_1)
+- The Wolf of Wallstreet (http://www.imdb.com/title/tt0993846/)
+
+# Shows
+
+- Homeland (http://www.imdb.com/title/tt1796960/?ref_=nv_sr_1)
+
 
 
