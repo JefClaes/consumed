@@ -8,12 +8,10 @@ app.configure (function(){
 });
 
 app.get('/index', function(req, res) {	
-	res.sendfile('index.html');	
-
-	es.helloWorld();
+	res.sendfile('index.html');		
 });
 
-app.post('/consumecommand', function(req, res) {
+app.post('/commands/consume', function(req, res) {
 	console.log('Consumed!');
 	console.log(req.body);
 
