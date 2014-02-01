@@ -1,5 +1,4 @@
 var express = require('express');
-var es = require('./eventstore.js').EventStoreClient;
 var app = express();
 
 app.configure (function(){

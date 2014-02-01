@@ -1,54 +1,45 @@
-var EventStoreClient = require('../eventstore.js').EventStoreClient;
 var Config = require('../config.js').Config;
-var MongoClient = require('mongodb').MongoClient;   
+var eventstore = require('eventstore');
+var storage = require('eventstore.mongodb');
+
+var es;
+
+var S4 = function() {
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+};
+
+var guid = function() {
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());    
+}
+
+var publisher = {
+    publish : function(event) {
+        console.log(event);
+    }
+};
 
 module.exports = {
-    setUp: function (callback) {
-        
-        MongoClient.connect(Config.connectionstring, function(err, db) {
-            var collection = db.collection('events', function(err, collection) {
-                collection.remove({}, {}, function() {
-                    callback();
-                });
-            });
-        });
+
+    setUp: function (callback) {         
+
+      
 
     },
 
-    tearDown: function (callback) {        
+    tearDown: function (callback) {                     
         callback();
     },  
 
     when_creating_a_stream_it_is_created: function (test) {       
-
-        EventStoreClient.createOrAppendToStream('stream', { a: 'b' } , function() {
-
-            MongoClient.connect(Config.connectionstring, function(err, db) { 
-
-                var collection = db.collection('events');
-
-                collection.count(function(err, count) {
-                    test.equals(count === 1, true);
-                    test.done();
-                });
-            });             
-                      
-        });        
+       
+       
        
     },
 
-    when_creating_an_event_with_null_body_an_exception_is_thrown : function(test) {
+   /* when_adding_an_event_to_an_existing_stream_it_is_added: function (test) {       
 
-        test.throws(function() { EventStoreClient.createEvent(null); }, Error, 'expected body');
-        test.done();
-
-    },
-
-    when_creating_an_event_with_undefined_body_an_exception_is_thrown : function(test) {
-
-        test.throws(function() { EventStoreClient.createEvent(); }, Error, 'expected body');
-        test.done();
-
-    }
+      
+       
+    }*/
 
 };
