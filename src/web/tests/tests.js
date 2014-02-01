@@ -1,6 +1,4 @@
 var Config = require('../config.js').Config;
-var eventstore = require('eventstore');
-var storage = require('eventstore.mongodb');
 
 var es;
 
