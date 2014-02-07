@@ -1,5 +1,6 @@
 var express = require('express');
 var er = require('./eventsourcing.js');
+var pj = require('./projections.js');
 var pg = require('pg'); 
 
 var app = express();
@@ -19,6 +20,8 @@ app.post('/commands/consume', function(req, res) {
 	pg.connect(conString, function(err, client, done) {     		
 
 		var repo = new er.EventRepository(client);
+		var projections = pj.load(); 
+		var disp = new er.Dispatcher(client, projections);
 		 
         var payload = { 'amount' : '5' };
         var event = new er.WriteEvent('accountDebited', payload);
@@ -30,17 +33,39 @@ app.post('/commands/consume', function(req, res) {
                 done();     
 
         		res.contentType('application/json');                
-				res.send();		
-        	} else {
-        		
-        		for (var i = 0; i < eventStream.events().length; i++) {
-        			console.log(eventStream.events()[i]);
-        		}
+				res.send(500);		
+        	} else {        		
 
-                done();     
+        		repo.getUndispatchedEventStream('1', function(result, err) {
 
-        		res.contentType('application/json');
-				res.send();		
+        			if (err) {
+
+        				res.contentType('application/json');
+						res.send(500);		
+
+        				done();
+        			} else {
+
+        				disp.dispatch(result, function(err) {
+
+        					if (err) {
+        						done();     
+
+        						res.contentType('application/json');
+								res.send(500);		
+        					} else {
+        						done();     
+
+        						res.contentType('application/json');
+								res.send();		
+        					}
+
+        				});        				
+
+        			}        			
+
+        		});
+
         	}    
         });
 

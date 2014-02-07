@@ -32,7 +32,6 @@ module.exports = {
 
     tearDown: function (callback) {                     
 
-        pg.end();
         callback();
 
     },

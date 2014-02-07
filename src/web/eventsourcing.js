@@ -44,7 +44,7 @@ module.exports = {
 		this.createOrAppendStream = function(eventStream, callback) {
   
 			var events = eventStream.getEvents();
-			var sql = 'INSERT INTO events (streamId, type, payload) VALUES ($1, $2, $3)';
+			var sql = 'INSERT INTO events (streamId, type, payload, dispatched) VALUES ($1, $2, $3, false)';
 
 			async.forEach(events, function(item, callback) {
 
@@ -80,7 +80,7 @@ module.exports = {
 			client.query(sql, parameters, function(err, result) {
 
 				if (err) {				
-					callback(err, null);
+					callback(null, err);
 				} else {				
 
 					var events = [];
@@ -94,7 +94,36 @@ module.exports = {
 
 					var eventStream = new module.exports.EventStream(streamId, events);
 
-					callback(null, eventStream);
+					callback(eventStream, null);
+				}						
+
+			});
+
+		},
+
+		this.getUndispatchedEventStream = function(streamId, callback) {
+
+			var sql = 'SELECT id, type, payload FROM events WHERE streamid = $1 AND dispatched = false';		
+			var parameters = [ streamId ];			
+
+			client.query(sql, parameters, function(err, result) {
+
+				if (err) {				
+					callback(null, err);
+				} else {				
+
+					var events = [];
+
+					for (var i = 0; i < result.rowCount; i++) {															
+
+						var row = result.rows[i];		
+						events.push(new module.exports.ReadEvent(row.id, row.type, row.payload));
+
+					}
+
+					var eventStream = new module.exports.EventStream(streamId, events);
+
+					callback(eventStream, null);
 				}						
 
 			});

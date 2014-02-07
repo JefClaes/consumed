@@ -22,7 +22,6 @@ module.exports = {
 
     tearDown: function (callback) {                     
 
-        pg.end();
         callback();
 
     },  
@@ -60,7 +59,7 @@ module.exports = {
 
               test.ok(firstEvent.getId());
               test.equal(firstEvent.getType(), 'accountDebited');              
-              test.equal(JSON.stringify(firstEvent.getPayload()), JSON.stringify(payload));
+              test.equal(JSON.stringify(firstEvent.getPayload()), JSON.stringify(payload));              
 
               test.done();                                                       
               done();              
