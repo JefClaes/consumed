@@ -44,9 +44,10 @@ module.exports = {
             events.push(event);          
           }
 
-          var eventStream = new er.WriteEventStream(streamId, events);                    
+          var eventStream = new er.EventStream(streamId, events);                              
 
           var callback = function(err, result) {
+            
             test.equal(err, null);
 
             repo.getEventStream(streamId, function(err, result) {
@@ -55,8 +56,11 @@ module.exports = {
               test.equal(result.getEvents().length, count);                                                                        
               test.equal(result.getStreamId(), streamId);
               
-              test.equal(result.getEvents()[0].getType(), 'accountDebited');              
-              test.equal(JSON.stringify(result.getEvents()[0].getPayload()), JSON.stringify(payload));
+              var firstEvent = result.getEvents()[0];
+
+              test.ok(firstEvent.getId());
+              test.equal(firstEvent.getType(), 'accountDebited');              
+              test.equal(JSON.stringify(firstEvent.getPayload()), JSON.stringify(payload));
 
               test.done();                                                       
               done();              
