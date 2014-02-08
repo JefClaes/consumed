@@ -1,5 +1,5 @@
 var config = { 
-	connectionstring : "mongodb://127.0.0.1:27017/test"
+	connectionstring : "pg://postgres:admin@localhost:5432/test"
 };
 
-exports.Config = config;
+module.exports = config;

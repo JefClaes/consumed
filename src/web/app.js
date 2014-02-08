@@ -4,6 +4,7 @@ var pg = require('pg');
 var er = require('./eventsourcing.js');
 var pj = require('./projections.js');
 var ev = require('./events.js');
+var config = require('./config.js');
 
 var app = express();
 
@@ -17,14 +18,13 @@ app.get('/index', function(req, res) {
 });
 
 app.post('/commands/consume', function(req, res) {
-	var conString = "pg://postgres:admin@localhost:5432/test";
 	res.contentType('application/json');               
 
 	async.waterfall([
 
 		function(callback) {
 
-			pg.connect(conString, function(err, client, done) {   
+			pg.connect(config.connectionstring, function(err, client, done) {   
 
 				if (err) {
 					callback(err);
