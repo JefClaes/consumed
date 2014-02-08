@@ -2,7 +2,7 @@ var async = require('async');
 
 module.exports = {
 
-	_ConsumedListProjection : function(client) {
+	ConsumedListProjection : function(client) {
 
 		this.run = function(eventStream, callback) {
 
@@ -46,7 +46,7 @@ module.exports = {
 	load : function(client) {
 
 		var projections = [];
-		projections.push(new this._ConsumedListProjection(client));
+		projections.push(new this.ConsumedListProjection(client));
 
 		return projections;
 

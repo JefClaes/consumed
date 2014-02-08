@@ -1,8 +1,9 @@
 var express = require('express');
+var async = require('async');
+var pg = require('pg'); 
 var er = require('./eventsourcing.js');
 var pj = require('./projections.js');
 var ev = require('./events.js');
-var pg = require('pg'); 
 
 var app = express();
 
@@ -19,67 +20,109 @@ app.post('/commands/consume', function(req, res) {
 	var conString = "pg://postgres:admin@localhost:5432/test";
 	res.contentType('application/json');               
 
-	pg.connect(conString, function(err, client, done) {     		
+	async.waterfall([
 
-		client.query('BEGIN', function(err) {
+		function(callback) {
 
-			var repo = new er.EventRepository(client);
-			var projections = pj.load(client); 
-			var disp = new er.Dispatcher(client, projections);
-			 
-	        var payload = new ev.ItemConsumed('1', 'Films', 'Golden Eye', 'http://jefclaes.be');
+			pg.connect(conString, function(err, client, done) {   
+
+				if (err) {
+					callback(err);
+				} else {
+					callback(null, client, done);
+				}
+
+			});
+
+		},
+
+		function (client, done, callback) {
+
+			client.query('BEGIN', function(err) {
+
+				if (err) {
+					callback(err);
+				} else {
+					callback(null, client, done);
+				}
+
+			});
+
+		},
+
+		function(client, done, callback) {
+
+			var repo = new er.EventRepository(client);			
+
+			var payload = new ev.ItemConsumed('1', 'Films', 'Golden Eye', 'http://jefclaes.be');
 	        var event = new er.WriteEvent(payload.type, payload);
-	        var eventStream = new er.EventStream('1', [ event ]);                      
-
-	        var handleError = function(err) {
-        		client.query('ROLLBACK', function() {
-        			console.log(err);
-
-        			done();     
-
-				 	res.send(500);		
-        		});	   
-	        };
-
-	        var commit = function() {
-	        	client.query('COMMIT', function() {
-					done();     
-					res.send();		
-	        	});				
-	        };
+	        var eventStream = new er.EventStream('1', [ event ]);    
 
 	        repo.createOrAppendStream(eventStream, function(err) {
 
-	        	if (err) {        		
-	        		handleError(err);
-	        	} else {        		
+	        	if (err) {
+	        		callback(err);
+	        	} else {
+	        		callback(null, client, done);
+	        	}
 
-	        		repo.getUndispatchedEventStream('1', function(result, err) {
-
-	        			if (err) {
-							handleError(err);
-	        			} else {
-
-	        				disp.dispatch(result, function(err) {
-
-	        					if (err) {
-	        						handleError(err);	
-	        					} else {
-	        						commit();
-	        					}
-
-	        				});        				
-
-	        			}        			
-
-	        		});
-
-	        	}    
 	        });
 
-		});		
+		},
 
-	});	
+		function(client, done, callback) {
+
+			var repo = new er.EventRepository(client);	
+
+			repo.getUndispatchedEventStream('1', function(result, err) {
+
+				if (err) {
+					callback(err);
+				} else {
+					callback(null, result, client, done);
+				}
+
+			});
+
+		},
+
+		function(eventStream, client, done, callback) {
+
+			var projections = pj.load(client); 			
+			var disp = new er.Dispatcher(client, projections);
+
+			disp.dispatch(eventStream, function(err) {
+
+				if (err) {
+					handleError(err);	
+				} else {
+					callback(null, client, done);
+				}
+
+			});        
+
+		}
+
+	], function (err, client, done) {
+
+		if (err) {
+
+			client.query('ROLLBACK', function() {
+				done();     
+			 	res.send(500);		
+    		});	   
+
+		} else {
+
+			client.query('COMMIT', function() {
+				done();     
+				res.send();		
+        	});			
+
+		}	
+
+	});
+	
 });
 
 app.listen(3000);
