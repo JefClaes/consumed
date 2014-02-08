@@ -1,6 +1,7 @@
 var express = require('express');
 var er = require('./eventsourcing.js');
 var pj = require('./projections.js');
+var ev = require('./events.js');
 var pg = require('pg'); 
 
 var app = express();
@@ -16,58 +17,67 @@ app.get('/index', function(req, res) {
 
 app.post('/commands/consume', function(req, res) {
 	var conString = "pg://postgres:admin@localhost:5432/test";
+	res.contentType('application/json');               
 
 	pg.connect(conString, function(err, client, done) {     		
 
-		var repo = new er.EventRepository(client);
-		var projections = pj.load(); 
-		var disp = new er.Dispatcher(client, projections);
-		 
-        var payload = { 'amount' : '5' };
-        var event = new er.WriteEvent('accountDebited', payload);
-        var eventStream = new er.EventStream('1', [ event ]);                      
+		client.query('BEGIN', function(err) {
 
-        repo.createOrAppendStream(eventStream, function(err) {
+			var repo = new er.EventRepository(client);
+			var projections = pj.load(client); 
+			var disp = new er.Dispatcher(client, projections);
+			 
+	        var payload = new ev.ItemConsumed('1', 'Films', 'Golden Eye', 'http://jefclaes.be');
+	        var event = new er.WriteEvent(payload.type, payload);
+	        var eventStream = new er.EventStream('1', [ event ]);                      
 
-        	if (err) {        		
-                done();     
+	        var handleError = function(err) {
+        		client.query('ROLLBACK', function() {
+        			console.log(err);
 
-        		res.contentType('application/json');                
-				res.send(500);		
-        	} else {        		
+        			done();     
 
-        		repo.getUndispatchedEventStream('1', function(result, err) {
+				 	res.send(500);		
+        		});	   
+	        };
 
-        			if (err) {
+	        var commit = function() {
+	        	client.query('COMMIT', function() {
+					done();     
+					res.send();		
+	        	});				
+	        };
 
-        				res.contentType('application/json');
-						res.send(500);		
+	        repo.createOrAppendStream(eventStream, function(err) {
 
-        				done();
-        			} else {
+	        	if (err) {        		
+	        		handleError(err);
+	        	} else {        		
 
-        				disp.dispatch(result, function(err) {
+	        		repo.getUndispatchedEventStream('1', function(result, err) {
 
-        					if (err) {
-        						done();     
+	        			if (err) {
+							handleError(err);
+	        			} else {
 
-        						res.contentType('application/json');
-								res.send(500);		
-        					} else {
-        						done();     
+	        				disp.dispatch(result, function(err) {
 
-        						res.contentType('application/json');
-								res.send();		
-        					}
+	        					if (err) {
+	        						handleError(err);	
+	        					} else {
+	        						commit();
+	        					}
 
-        				});        				
+	        				});        				
 
-        			}        			
+	        			}        			
 
-        		});
+	        		});
 
-        	}    
-        });
+	        	}    
+	        });
+
+		});		
 
 	});	
 });

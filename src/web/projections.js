@@ -1,16 +1,43 @@
+var async = require('async');
+
 module.exports = {
 
 	_ConsumedListProjection : function(client) {
 
 		this.run = function(eventStream, callback) {
 
-			for (var i = 0; i < eventStream.getEvents().length; i++) {
+			async.forEach(eventStream.getEvents(), function(event, callback) {
+			
+				if (event.getType() === 'ItemConsumed') {					
 
-				console.log(eventStream.getEvents()[i]);
+					var payload = event.getPayload();
+					var sql = 'INSERT INTO consumed_lists (userid, description, category, link) VALUES ($1, $2, $3, $4)';
+					var parameters = [ 
+						payload.userId, 
+						payload.description, 
+						payload.category,
+						payload.link ];						
 
-			}
+					client.query(sql, parameters, function(err, result) {							
+					
+						if (err) {
+							callback(err);
+						} else {
+							callback(null);
+						}
 
-			callback();
+					});
+				}
+			
+			}, function(err) {
+
+				if (err) {
+					callback(err);
+				} else {
+					callback(null);
+				}				
+
+			});								
 
 		}
 
