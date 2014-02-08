@@ -1,4 +1,6 @@
+var util = require('util');
 var express = require('express');
+var expressValidator = require('express-validator');
 var async = require('async');
 var pg = require('pg'); 
 var er = require('./eventsourcing.js');
@@ -9,8 +11,9 @@ var config = require('./config.js');
 var app = express();
 
 app.configure (function(){
-    app.use (express.logger({ format: ":method :url" }));        
-    app.use (express.bodyParser());        
+    app.use(express.logger({ format: ":method :url" }));        
+    app.use(express.bodyParser());        
+    app.use(expressValidator()); 
 });
 
 app.get('/index', function(req, res) {	
@@ -19,6 +22,14 @@ app.get('/index', function(req, res) {
 
 app.post('/commands/consume', function(req, res) {
 	res.contentType('application/json');               
+
+	req.checkBody('description', 'Invalid description').notEmpty();
+
+	var errors = req.validationErrors();
+	if (errors) {
+		res.send(errors, 400);		
+    	return;
+	}
 
 	async.waterfall([
 
