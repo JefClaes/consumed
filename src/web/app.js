@@ -24,6 +24,8 @@ app.post('/commands/consume', function(req, res) {
 	res.contentType('application/json');               
 
 	req.checkBody('description', 'Invalid description').notEmpty();
+	req.checkBody('category', 'Invalid category').notEmpty();
+	req.checkBody('link', 'Invalid link').notEmpty();
 
 	var errors = req.validationErrors();
 	if (errors) {
@@ -65,7 +67,7 @@ app.post('/commands/consume', function(req, res) {
 
 			var repo = new er.EventRepository(client);			
 
-			var payload = new ev.ItemConsumed('1', 'Films', 'Golden Eye', 'http://jefclaes.be');
+			var payload = new ev.ItemConsumed('1', req.body.category, req.body.description, req.body.link);
 	        var event = new er.WriteEvent(payload.type, payload);
 	        var eventStream = new er.EventStream('1', [ event ]);    
 
