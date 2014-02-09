@@ -51,6 +51,7 @@ module.exports = {
               callback(null); 
             } 
           };
+
           var projections = [ dummyProjection ];
           var dispatcher = new er.Dispatcher(client, projections);          
 

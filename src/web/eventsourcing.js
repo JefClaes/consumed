@@ -77,10 +77,10 @@ module.exports = {
 			var sql = 'SELECT id, type, payload FROM events WHERE streamid = $1';		
 			var parameters = [ streamId ];			
 
-			client.query(sql, parameters, function(err, result) {
+			client.query(sql, parameters, function(err, result) {      
 
 				if (err) {				
-					callback(null, err);
+					callback(err, null);
 				} else {				
 
 					var events = [];
@@ -94,7 +94,7 @@ module.exports = {
 
 					var eventStream = new module.exports.EventStream(streamId, events);
 
-					callback(eventStream, null);
+					callback(null, eventStream);
 				}						
 
 			});
@@ -109,7 +109,7 @@ module.exports = {
 			client.query(sql, parameters, function(err, result) {
 
 				if (err) {				
-					callback(null, err);
+					callback(err, null);
 				} else {				
 
 					var events = [];
@@ -123,7 +123,7 @@ module.exports = {
 
 					var eventStream = new module.exports.EventStream(streamId, events);
 
-					callback(eventStream, null);
+					callback(null, eventStream);
 				}						
 
 			});
@@ -159,8 +159,8 @@ module.exports = {
 						var sql = "UPDATE events SET dispatched = true WHERE id = $1";
 						var parameters = [ event.getId() ];
 
-						client.query(sql, parameters, function(err, result) {											
-							
+						client.query(sql, parameters, function(err, result) {																		
+
 							if (err) {
 								callback(err);
 							} else {

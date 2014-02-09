@@ -85,7 +85,7 @@ app.post('/commands/consume', function(req, res) {
 
 			var repo = new er.EventRepository(client);	
 
-			repo.getUndispatchedEventStream('1', function(result, err) {
+			repo.getUndispatchedEventStream('1', function(err, result) {
 
 				if (err) {
 					callback(err);
