@@ -1,3 +1,7 @@
+# Podcasts
+
+- Distributed Podcast: Episode 8 - When to Avoid CQRS 
+
 # Books
 
 - The Happinness Advantage (http://www.jefclaes.be/2014/01/happiness-before-success.html)
