@@ -1,6 +1,7 @@
 # Podcasts
 
-- Distributed Podcast: Episode 8 - When to Avoid CQRS 
+- Distributed Podcast: Episode 8 - When to Avoid CQRS (http://distributedpodcast.com/2011/episode-9-when-to-avoid-cqrsclarified)
+- Distributed Podcast: Episode 13 - Lucky Episode (http://distributedpodcast.com/2012/13-lucky-episode)
 
 # Books
 
