@@ -65,6 +65,10 @@ app.post('/commands/consume', function(req, res) {
     	return;
 	}
 
+	var payload = new ev.ItemConsumed('1', req.body.category, req.body.description, req.body.link);
+    var event = new er.WriteEvent(payload.type, payload);
+    var eventStream = new er.EventStream('1', [ event ]);  
+				
 	async.waterfall([
 
 		function(callback) {
@@ -95,79 +99,44 @@ app.post('/commands/consume', function(req, res) {
 
 		},
 
-		function(client, done, callback) {
+		function (client, done, callback) {
 
-			var repo = new er.EventRepository(client);			
+			var projections = pj.load(client);	
+			var store = new er.EventStore(client, projections);
 
-			var payload = new ev.ItemConsumed('1', req.body.category, req.body.description, req.body.link);
-	        var event = new er.WriteEvent(payload.type, payload);
-	        var eventStream = new er.EventStream('1', [ event ]);    
-
-	        repo.createOrAppendStream(eventStream, function(err) {
-
-	        	if (err) {
-	        		callback(err);
-	        	} else {
-	        		callback(null, client, done);
-	        	}
-
-	        });
-
-		},
-
-		function(client, done, callback) {
-
-			var repo = new er.EventRepository(client);	
-
-			repo.getUndispatchedEventStream('1', function(err, result) {
+			store.createOrAppendStream(eventStream, function(err) {
 
 				if (err) {
 					callback(err);
 				} else {
-					callback(null, result, client, done);
+					callback(null, client, done);
 				}
 
 			});
 
-		},
+		}], 
 
-		function(eventStream, client, done, callback) {
+		function (err, client, done) {
 
-			var projections = pj.load(client); 			
-			var disp = new er.Dispatcher(client, projections);
+			if (err) {
 
-			disp.dispatch(eventStream, function(err) {
+				client.query('ROLLBACK', function() {
+					done();     
+				 	res.send(500);		
+	    		});	   
 
-				if (err) {
-					handleError(err);	
-				} else {
-					callback(null, client, done);
-				}
+			} else {
 
-			});        
+				client.query('COMMIT', function() {
+					done();     
+					res.send();		
+	        	});			
 
-		}
+			}	
 
-	], function (err, client, done) {
+		});
 
-		if (err) {
 
-			client.query('ROLLBACK', function() {
-				done();     
-			 	res.send(500);		
-    		});	   
-
-		} else {
-
-			client.query('COMMIT', function() {
-				done();     
-				res.send();		
-        	});			
-
-		}	
-
-	});
-	
 });
 
 function ensureAuthenticated(req, res, next) {

@@ -185,6 +185,74 @@ module.exports = {
 
 		}
 
-	}	
+	},
+
+	EventStore : function(client, projections) {
+
+		this.createOrAppendStream  = function(eventStream, callback) {
+
+			async.waterfall([				
+
+				function(waterFallCallback) {
+
+					var repo = new module.exports.EventRepository(client);			
+
+			        repo.createOrAppendStream(eventStream, function(err) {
+
+			        	if (err) {
+			        		waterFallCallback(err);
+			        	} else {
+			        		waterFallCallback(null, client, callback);
+			        	}
+
+			        });
+
+				},
+
+				function(client, callback, waterFallCallback) {
+
+					var repo = new module.exports.EventRepository(client);	
+
+					repo.getUndispatchedEventStream('1', function(err, result) {
+
+						if (err) {
+							waterFallCallback(err);
+						} else {
+							waterFallCallback(null, result, client, callback);
+						}
+
+					});
+
+				},
+
+				function(eventStream, client, callback, waterFallCallback) {
+
+					var disp = new module.exports.Dispatcher(client, projections);
+
+					disp.dispatch(eventStream, function(err) {
+
+						if (err) {
+							waterFallCallback(err);	
+						} else {
+							waterFallCallback(null, client, callback);
+						}
+
+					});        
+
+				}
+
+			], function (err, client, callback) {
+
+				if (err) {
+					callback(err);
+				} else {
+					callback(null);
+				}	
+
+			});
+		
+		}
+
+	} 
 
 };

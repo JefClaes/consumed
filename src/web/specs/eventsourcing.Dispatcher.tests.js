@@ -8,7 +8,7 @@ describe("Dispatcher", function() {
 
 	beforeEach(function(callback) {
 
-	 pg.connect(conString, function(err, client, done) {            
+	 pg.connect(conString, function(err, client, done) {           
 
       client.query('TRUNCATE TABLE events', function(err, result) {                            
 
