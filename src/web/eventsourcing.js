@@ -24,7 +24,6 @@ module.exports = {
 
 	},
 
-
 	ReadEvent : function(id, type, payload) {		
 
 		this.getId = function() {
@@ -200,7 +199,7 @@ module.exports = {
 			        repo.createOrAppendStream(eventStream, function(err) {
 
 			        	if (err) {
-			        		waterFallCallback(err);
+			        		waterFallCallback(err, client, callback);
 			        	} else {
 			        		waterFallCallback(null, client, callback);
 			        	}
@@ -213,10 +212,10 @@ module.exports = {
 
 					var repo = new module.exports.EventRepository(client);	
 
-					repo.getUndispatchedEventStream('1', function(err, result) {
+					repo.getUndispatchedEventStream(eventStream.getStreamId(), function(err, result) {
 
 						if (err) {
-							waterFallCallback(err);
+							waterFallCallback(err, client, callback);
 						} else {
 							waterFallCallback(null, result, client, callback);
 						}
@@ -232,7 +231,7 @@ module.exports = {
 					disp.dispatch(eventStream, function(err) {
 
 						if (err) {
-							waterFallCallback(err);	
+							waterFallCallback(err, client, callback);	
 						} else {
 							waterFallCallback(null, client, callback);
 						}

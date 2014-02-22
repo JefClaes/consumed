@@ -1,10 +1,47 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
 
+				$("#consume").click(function() {
+
+					var category = $("#category").val();
+					var description = $("#description").val();
+					var link = $("#link").val();
+
+					$.ajax({
+					  type: "POST",
+					  url: "/commands/consume",
+					  data: { "category" : category, "description" : description, "link" : link },
+					  success: function() { alert("consumed!"); },
+					  error: function(x, y, z) { console.log(x); console.log(y); console.log(z); alert("epic fail!"); },
+					  dataType: "json"
+					});
+
+				});
+
+			})
+		</script>
 	</head>
 	<body>
 		<h1>Hello</h1>
 		<a href="/auth/twitter">Sign in with Twitter</a>
+		<div>
+			<label>Category:</label>
+			<input type="text" id="category"></input>
+		</div>
+		<div>
+			<label>Description:</label>
+			<input type="text" id="description"></input>
+		</div>
+		<div>
+			<label>Link:</label>
+			<input type="text" id="link"></input>
+		</div>
+		<div>
+			<input type="button" id="consume">Consume</input>
+		</div>
 	</body>
 </html>

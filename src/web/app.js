@@ -31,6 +31,7 @@ passport.use(new TwitterStrategy({
 ));
 
 app.configure (function(){
+	app.use(express.static('static'));
     app.use(express.logger({ format: ":method :url" }));        
     app.use(express.bodyParser());        
     app.use(expressValidator()); 
@@ -48,16 +49,22 @@ app.get('/auth/twitter/callback',
     res.redirect('/index');
   });
 
-app.get('/index', function(req, res) {	
+app.get('/index', function(req, res) {
+	if (req.user) {
+		console.log(req.user.provider + '/' + req.user.username);
+	}
+
 	res.sendfile('index.html');		
 });
 
-app.post('/commands/consume', function(req, res) {
+app.post('/commands/consume', ensureApiAuthenticated, function(req, res) {
 	res.contentType('application/json');               
 
 	req.checkBody('description', 'Invalid description').notEmpty();
 	req.checkBody('category', 'Invalid category').notEmpty();
 	req.checkBody('link', 'Invalid link').notEmpty();
+
+	console.log(req);
 
 	var errors = req.validationErrors();
 	if (errors) {
@@ -65,9 +72,9 @@ app.post('/commands/consume', function(req, res) {
     	return;
 	}
 
-	var payload = new ev.ItemConsumed('1', req.body.category, req.body.description, req.body.link);
+	var payload = new ev.ItemConsumed(req.user.username, req.body.category, req.body.description, req.body.link);
     var event = new er.WriteEvent(payload.type, payload);
-    var eventStream = new er.EventStream('1', [ event ]);  
+    var eventStream = new er.EventStream('consumed/' + req.user.provider + '/' + req.user.username, [ event ]);  
 				
 	async.waterfall([
 
@@ -76,7 +83,7 @@ app.post('/commands/consume', function(req, res) {
 			pg.connect(config.connectionstring, function(err, client, done) {   
 
 				if (err) {
-					callback(err);
+					callback(err, client, done);
 				} else {
 					callback(null, client, done);
 				}
@@ -90,7 +97,7 @@ app.post('/commands/consume', function(req, res) {
 			client.query('BEGIN', function(err) {
 
 				if (err) {
-					callback(err);
+					callback(err, client, done);
 				} else {
 					callback(null, client, done);
 				}
@@ -107,7 +114,7 @@ app.post('/commands/consume', function(req, res) {
 			store.createOrAppendStream(eventStream, function(err) {
 
 				if (err) {
-					callback(err);
+					callback(err, client, done);
 				} else {
 					callback(null, client, done);
 				}
@@ -120,6 +127,8 @@ app.post('/commands/consume', function(req, res) {
 
 			if (err) {
 
+				console.log(err);
+
 				client.query('ROLLBACK', function() {
 					done();     
 				 	res.send(500);		
@@ -129,7 +138,7 @@ app.post('/commands/consume', function(req, res) {
 
 				client.query('COMMIT', function() {
 					done();     
-					res.send();		
+					res.send(200, { result : 'ok' });		
 	        	});			
 
 			}	
@@ -144,7 +153,15 @@ function ensureAuthenticated(req, res, next) {
   	return next(); 
   }
   
-  res.redirect('/login')
+  res.redirect('/auth/twitter');
+}
+
+function ensureApiAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { 
+  	return next(); 
+  }
+  
+  res.send(401);
 }
 
 module.exports = app;
