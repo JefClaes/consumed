@@ -31,7 +31,7 @@ passport.use(new TwitterStrategy({
 ));
 
 app.configure (function(){
-	app.use(express.static('static'));
+	app.use(express.static("static", __dirname + '/static'));
     app.use(express.logger({ format: ":method :url" }));        
     app.use(express.bodyParser());        
     app.use(expressValidator()); 
