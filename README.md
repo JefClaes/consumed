@@ -28,3 +28,6 @@
 
 - Anatomy of a database system (http://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0002.pdf)
 
+# Videos
+
+- How to get productive in a project in 24 hours (http://www.youtube.com/watch?v=KaLROwp-VDY)
