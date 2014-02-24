@@ -6,6 +6,7 @@ var util = require('util')
 	, er = require('./eventsourcing.js')
 	, pj = require('./projections.js')
 	, ev = require('./events.js')
+	, queries = require('./queries.js')
 	, config = require('./config.js')
 	, passport = require('passport')
  	, TwitterStrategy = require('passport-twitter').Strategy;
@@ -57,6 +58,32 @@ app.get('/index', function(req, res) {
 	res.sendfile('index.html');		
 });
 
+app.get('/queries/consumedlists', ensureApiAuthenticated, function(req, res) {
+	res.contentType('application/json');               
+
+	pg.connect(config.connectionstring, function(err, client, done) {
+
+		if (err) {
+			done();
+			res.send(500);
+		} else {
+			var queryExecutor = new queries.QueryExecutor(client);
+			var userid = req.user.provider + '/' + req.user.username;
+			queryExecutor.execute({ type : 'getconsumedlists', userid : userid } }, function(err, result) {
+				if (err) {
+					done();
+					res.send(500);
+				} else {
+					done();
+					res.send(result);
+				}
+			});
+		}
+
+	});
+
+});
+
 app.post('/commands/consume', ensureApiAuthenticated, function(req, res) {
 	res.contentType('application/json');               
 
@@ -72,7 +99,7 @@ app.post('/commands/consume', ensureApiAuthenticated, function(req, res) {
     	return;
 	}
 
-	var payload = new ev.ItemConsumed(req.user.username, req.body.category, req.body.description, req.body.link);
+	var payload = new ev.ItemConsumed(req.user.provider + '/' + req.user.username, req.body.category, req.body.description, req.body.link);
     var event = new er.WriteEvent(payload.type, payload);
     var eventStream = new er.EventStream('consumed/' + req.user.provider + '/' + req.user.username, [ event ]);  
 				
