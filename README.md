@@ -5,6 +5,10 @@
 - Distributed Podcast: Episode 8 - When to Avoid CQRS (http://distributedpodcast.com/2011/episode-9-when-to-avoid-cqrsclarified)
 - Distributed Podcast: Episode 12 - LMAX
 - Distributed Podcast: Episode 13 - Lucky Episode (http://distributedpodcast.com/2012/13-lucky-episode)
+- Distributed Podcast: Episode 14 - Go Accident (http://distributedpodcast.com/2014/episode-14)
+- This Developer's Life: 3.0.2 - Space (http://thisdeveloperslife.com/post/3-0-2-space)
+- This American Life: #450 - So Crazy It Just Might Work (http://www.thisamericanlife.org/radio-archives/episode/450/so-crazy-it-just-might-work)
+- This American Life: #518 - Except For That One Thing (http://www.thisamericanlife.org/radio-archives/episode/518/except-for-that-one-thing)
 
 # iTunes University
 
