@@ -1,6 +1,7 @@
 # Podcasts
 
 - Distributed Podcast: Episode 5 - CQRS EventStore – Best Framework/Library Ever! (http://distributedpodcast.com/2011/episode-5-cqrs-eventstore-best-frameworklibrary-ever)
+- Distributed Podcast: Episode 6 - Interview with Jimmy Bogard (http://distributedpodcast.com/2011/episode-6-interview-with-jimmy-bogard)
 - Distributed Podcast: Episode 7 - Interview with Ayende Rahien (http://distributedpodcast.com/2011/episode-007-interview-with-ayende-rahien)
 - Distributed Podcast: Episode 8 - When to Avoid CQRS (http://distributedpodcast.com/2011/episode-9-when-to-avoid-cqrsclarified)
 - Distributed Podcast: Episode 12 - LMAX
@@ -9,6 +10,8 @@
 - This Developer's Life: 3.0.2 - Space (http://thisdeveloperslife.com/post/3-0-2-space)
 - This American Life: #450 - So Crazy It Just Might Work (http://www.thisamericanlife.org/radio-archives/episode/450/so-crazy-it-just-might-work)
 - This American Life: #518 - Except For That One Thing (http://www.thisamericanlife.org/radio-archives/episode/518/except-for-that-one-thing)
+- This American Life #450 - So Crazy It Just Might Work (http://www.thisamericanlife.org/radio-archives/episode/450/so-crazy-it-just-might-work)
+- VICE Podcast: 009 - Jeremy Scahill on "Dirty Wars" (http://www.vice.com/read/the-vice-podcast-show-jeremy-scahill-on-dirty-wars-and-national-security)
 
 # iTunes University
 
@@ -29,6 +32,7 @@
 # Shows
 
 - Homeland (http://www.imdb.com/title/tt1796960/?ref_=nv_sr_1)
+- True Detective Season 1 (http://www.imdb.com/title/tt2356777/)
 
 # Papers
 
