@@ -23,6 +23,7 @@
 - Drive (http://www.amazon.co.uk/Drive-Surprising-Truth-About-Motivates/dp/184767769X/ref=sr_1_3?ie=UTF8&qid=1389712304&sr=8-3&keywords=drive)
 - Thinking in Systems (http://www.amazon.com/gp/product/1603580557/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1603580557&linkCode=as2&tag=diofanedebyje-20)
 - Nervous System (http://www.amazon.com/gp/product/1840467932/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1840467932&linkCode=as2&tag=diofanedebyje-20)
+- Code Connected Volume 1 (http://www.amazon.co.uk/Code-Connected-Volume-Learning-ZeroMQ/dp/1481262653/ref=sr_1_1?ie=UTF8&qid=1396283302&sr=8-1&keywords=code+connected+volume+1)
  
 # Audio books
 
