@@ -40,6 +40,7 @@
 - Homeland (http://www.imdb.com/title/tt1796960/?ref_=nv_sr_1)
 - True Detective Season 1 (http://www.imdb.com/title/tt2356777/)
 - House of Cards Season 1 (http://www.imdb.com/title/tt1856010/?ref_=nv_sr_1)
+- The Walking Dead Seaon 4 (http://www.imdb.com/title/tt1520211/?ref_=nv_sr_1)
 
 # Papers
 
