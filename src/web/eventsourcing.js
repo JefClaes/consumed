@@ -61,6 +61,8 @@ module.exports = {
 			
 			}, function(err) {
 
+				console.log(err);
+
 				if (err) {
 					callback(err);
 				} else {

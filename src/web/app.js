@@ -69,7 +69,7 @@ app.get('/queries/consumedlists', ensureApiAuthenticated, function(req, res) {
 		} else {
 			var queryExecutor = new queries.QueryExecutor(client);
 			var userid = req.user.provider + '/' + req.user.username;
-			queryExecutor.execute({ type : 'getconsumedlists', userid : userid } }, function(err, result) {
+			queryExecutor.execute({ type : 'getconsumedlists', userid : userid }, function(err, result) {
 				if (err) {
 					done();
 					res.send(500);

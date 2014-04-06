@@ -7,7 +7,7 @@ module.exports = {
 		this.run = function(eventStream, callback) {
 
 			async.forEach(eventStream.getEvents(), function(event, callback) {
-			
+
 				if (event.getType() === 'ItemConsumed') {					
 
 					var payload = event.getPayload();

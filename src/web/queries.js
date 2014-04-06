@@ -18,14 +18,13 @@ module.exports = {
 
 						for (var i = 0; i < queryResult.rowCount; i++) {
 							if (!result.hasOwnProperty(queryResult.rows[i].category)) {
-								result[queryResult.rows[i].category] = { items : [] };
-							} else {
-								result[queryResult.rows[i].category].items.push({ 
+								result[queryResult.rows[i].category] = { items : [] }; 
+							} 
+							result[queryResult.rows[i].category].items.push({ 
 									id : queryResult.rows[i].id, 
 									description : queryResult.rows[i].description,
 									category : queryResult.rows[i].category  
-								})
-							}
+								});
 						}
 
 						callback(null, result);
@@ -40,7 +39,6 @@ module.exports = {
 				callback('Unable to find query of type ' + query.getType(), null);
 
 			}
-
 
 		}
 
