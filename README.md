@@ -28,6 +28,7 @@
 # Audio books
 
 - Contagious: Why Things Catch On (http://www.audible.com/pd/Business/Contagious-Audiobook/B00B91PMPM/ref=a_search_c4_1_1_srTtl?qid=1395694245&sr=1-1)
+- Brainfluence (http://www.audible.com/pd/Business/Brainfluence-100-Ways-to-Persuade-and-Convince-Consumers-with-Neuromarketing-Audiobook/B008R2UEN6/ref=a_search_c4_1_1_srTtl?qid=1397076348&sr=1-1)
 
 # Movies
 
