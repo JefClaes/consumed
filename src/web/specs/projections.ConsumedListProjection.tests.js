@@ -53,8 +53,7 @@ describe("Running a ConsumedListProjection", function() {
 				expect(err).toEqual(null);
 
 				expect(result.userid).toEqual('jef');
-				expect(result.movie.items.length).toEqual(1);
-				expect(result.book.items.length).toEqual(1);
+				expect(result.categories.length).toEqual(2);
 
 				testDone();
 

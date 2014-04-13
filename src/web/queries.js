@@ -1,3 +1,5 @@
+var _ = require('underscore-node');
+
 module.exports = {
 
 	QueryExecutor : function(client) {
@@ -6,7 +8,7 @@ module.exports = {
 
 			if (query.type === 'getconsumedlists') {
 
-				var sql = 'SELECT id, description, userid, category, link FROM consumed_lists';		
+				var sql = 'SELECT id, description, userid, category, link FROM consumed_lists ORDER BY category ASC';		
 
 				client.query(sql, [], function(err, queryResult) {      
 
@@ -14,16 +16,24 @@ module.exports = {
 						callback(err, null);
 					} else {		
 					
-						var result = { userid : query.userid };
+						var result = { userid : query.userid, categories: [] };
+						var categoryIndex = -1;
 
 						for (var i = 0; i < queryResult.rowCount; i++) {
-							if (!result.hasOwnProperty(queryResult.rows[i].category)) {
-								result[queryResult.rows[i].category] = { items : [] }; 
+
+							var categoryExists = _.any(result.categories, function(category) {
+								return queryResult.rows[i].category === category.name;
+							});
+
+							if (!categoryExists) {
+								categoryIndex++;
+								result.categories.push({ name : queryResult.rows[i].category, items : [] }); 
 							} 
-							result[queryResult.rows[i].category].items.push({ 
+						
+							result.categories[categoryIndex].items.push({ 
 									id : queryResult.rows[i].id, 
 									description : queryResult.rows[i].description,
-									category : queryResult.rows[i].category  
+									link : queryResult.rows[i].link  
 								});
 						}
 
