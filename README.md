@@ -45,10 +45,14 @@ _
 - True Detective Season 1 (http://www.imdb.com/title/tt2356777/)
 - House of Cards Season 1 (http://www.imdb.com/title/tt1856010/?ref_=nv_sr_1)
 - The Walking Dead Seaon 4 (http://www.imdb.com/title/tt1520211/?ref_=nv_sr_1)
+- 
+- Rick and Morty Season 1
 
 # Papers
 
 - Anatomy of a database system (http://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0002.pdf)
+- 
+- Orleans: Distributed Virtual Actors for Programmability and Scalability 
 
 # Videos
 
