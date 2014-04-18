@@ -41,20 +41,43 @@
 
       </div>
 
+      <div class="row" id="lists" data-bind="with: data">
+
+        <ul data-bind="foreach: categories">
+            <li>
+                <span data-bind="text: name"></span>
+                <ul data-bind="foreach: items">
+                   <li data-bind="text: description">
+                   </li>
+                </ul>
+            </li>
+        </ul>
+
+      </div>
+
     </div>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+    <script type="text/javascript" src="/js/knockout.mapping.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(function() {
 
-        $.ajax({
-          type: "GET",
-          url: "/queries/consumedlists",
-          success: function(data) {
-            console.log(data);
-          }
+        var AjaxModel = function (url) {
+          var self = this;
 
-        });
+          self.data = ko.observable();
+          self.load = function () {
+            $.get(url, function (data) {
+                self.data(ko.mapping.fromJS(data));
+            });
+          };
+
+          self.load();
+        };
+
+        var listModel = new AjaxModel("/queries/consumedlists");
+        ko.applyBindings(listModel, document.getElementById("lists"));
 
         $("#consume").click(function() {
 
