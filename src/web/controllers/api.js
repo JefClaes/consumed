@@ -19,7 +19,64 @@ module.exports = {
 		  }
 		  
 		  res.send(401);
-		}
+		};
+
+		var inTransaction = function(body, success, fail) {
+
+			async.waterfall([
+
+				function(callback) {
+
+					pg.connect(config.connectionstring, function(err, client, done) {   
+
+						if (err) {
+							callback(err, client, done);
+						} else {
+							callback(null, client, done);
+						}
+
+					});
+
+				},
+
+				function (client, done, callback) {
+
+					client.query('BEGIN', function(err) {
+
+						if (err) {
+							callback(err, client, done);
+						} else {
+							callback(null, client, done);
+						}
+
+					});
+
+				},
+
+				body], 
+
+				function (err, client, done) {
+
+					if (err) {
+
+						client.query('ROLLBACK', function() {
+							done();     
+							fail();
+			    		});	   
+
+					} else {
+
+						client.query('COMMIT', function() {
+							done();     
+							success();
+			        	});			
+
+					}	
+
+				});
+
+
+		};
 
 		app.get('/queries/consumedlists', ensureApiAuthenticated, function(req, res) {
 			res.contentType('application/json');               
@@ -54,8 +111,6 @@ module.exports = {
 			req.checkBody('category', 'Invalid category').notEmpty();
 			req.checkBody('link', 'Invalid link').notEmpty();
 
-			console.log(req);
-
 			var errors = req.validationErrors();
 			if (errors) {
 				res.send(errors, 400);		
@@ -65,74 +120,33 @@ module.exports = {
 			var payload = new ev.ItemConsumed(req.user.provider + '/' + req.user.username, req.body.category, req.body.description, req.body.link);
 		    var event = new er.WriteEvent(payload.type, payload);
 		    var eventStream = new er.EventStream('consumed/' + req.user.provider + '/' + req.user.username, [ event ]);  
-						
-			async.waterfall([
+			
+		    var body = function (client, done, callback) {
 
-				function(callback) {
+				var projections = pj.load(client);	
+				var store = new er.EventStore(client, projections);
 
-					pg.connect(config.connectionstring, function(err, client, done) {   
-
-						if (err) {
-							callback(err, client, done);
-						} else {
-							callback(null, client, done);
-						}
-
-					});
-
-				},
-
-				function (client, done, callback) {
-
-					client.query('BEGIN', function(err) {
-
-						if (err) {
-							callback(err, client, done);
-						} else {
-							callback(null, client, done);
-						}
-
-					});
-
-				},
-
-				function (client, done, callback) {
-
-					var projections = pj.load(client);	
-					var store = new er.EventStore(client, projections);
-
-					store.createOrAppendStream(eventStream, function(err) {
-
-						if (err) {
-							callback(err, client, done);
-						} else {
-							callback(null, client, done);
-						}
-
-					});
-
-				}], 
-
-				function (err, client, done) {
+				store.createOrAppendStream(eventStream, function(err) {
 
 					if (err) {
-
-						client.query('ROLLBACK', function() {
-							done();     
-						 	res.send(500);		
-			    		});	   
-
+						callback(err, client, done);
 					} else {
-
-						client.query('COMMIT', function() {
-							done();     
-							res.send(200, { result : 'ok' });		
-			        	});			
-
-					}	
+						callback(null, client, done);
+					}
 
 				});
 
+			};
+
+		    var success = function() {
+		    	res.send(200, { result : 'ok' });
+		    };
+
+		    var fail = function() {
+		    	res.send(500);		
+		    };
+
+			inTransaction(body, success, fail);
 
 		});
 
