@@ -24,14 +24,13 @@
 - Thinking in Systems (http://www.amazon.com/gp/product/1603580557/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1603580557&linkCode=as2&tag=diofanedebyje-20)
 - Nervous System (http://www.amazon.com/gp/product/1840467932/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1840467932&linkCode=as2&tag=diofanedebyje-20)
 - Code Connected Volume 1 (http://www.amazon.co.uk/Code-Connected-Volume-Learning-ZeroMQ/dp/1481262653/ref=sr_1_1?ie=UTF8&qid=1396283302&sr=8-1&keywords=code+connected+volume+1)
-
-_
 - Node.js the Right Way (http://www.amazon.co.uk/Node-js-Right-Way-Server-Side-JavaScript/dp/1937785734/ref=sr_1_1?ie=UTF8&qid=1397419833&sr=8-1&keywords=node.js+the+right+way)
  
 # Audio books
 
 - Contagious: Why Things Catch On (http://www.audible.com/pd/Business/Contagious-Audiobook/B00B91PMPM/ref=a_search_c4_1_1_srTtl?qid=1395694245&sr=1-1)
 - Brainfluence (http://www.audible.com/pd/Business/Brainfluence-100-Ways-to-Persuade-and-Convince-Consumers-with-Neuromarketing-Audiobook/B008R2UEN6/ref=a_search_c4_1_1_srTtl?qid=1397076348&sr=1-1)
+- Notes to a software team leader (http://www.audible.com/search/ref=a_search_tseft__galileo?advsearchKeywords=notes+to+a+software+team+leader&x=0&y=0&sprefix=notes+to+a+)
 
 # Movies
 
@@ -46,13 +45,11 @@ _
 - True Detective Season 1 (http://www.imdb.com/title/tt2356777/)
 - House of Cards Season 1 (http://www.imdb.com/title/tt1856010/?ref_=nv_sr_1)
 - The Walking Dead Seaon 4 (http://www.imdb.com/title/tt1520211/?ref_=nv_sr_1)
-- 
 - Rick and Morty Season 1
 
 # Papers
 
 - Anatomy of a database system (http://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0002.pdf)
-- 
 - Orleans: Distributed Virtual Actors for Programmability and Scalability 
 
 # Videos
