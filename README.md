@@ -25,6 +25,7 @@
 - Nervous System (http://www.amazon.com/gp/product/1840467932/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1840467932&linkCode=as2&tag=diofanedebyje-20)
 - Code Connected Volume 1 (http://www.amazon.co.uk/Code-Connected-Volume-Learning-ZeroMQ/dp/1481262653/ref=sr_1_1?ie=UTF8&qid=1396283302&sr=8-1&keywords=code+connected+volume+1)
 - Node.js the Right Way (http://www.amazon.co.uk/Node-js-Right-Way-Server-Side-JavaScript/dp/1937785734/ref=sr_1_1?ie=UTF8&qid=1397419833&sr=8-1&keywords=node.js+the+right+way)
+- SQL Performance Explained (http://www.amazon.co.uk/SQL-Performance-Explained-Markus-Winand/dp/3950307826/ref=sr_1_1?s=books&ie=UTF8&qid=1399156807&sr=1-1&keywords=sql+performance+explained)
  
 # Audio books
 
