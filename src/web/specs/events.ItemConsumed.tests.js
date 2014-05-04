@@ -1,3 +1,5 @@
+var ev = require('../events.js'); 
+
 describe("ItemConsumed event", function() {
  
   	it("throws when it is initialized without userId", function() {
@@ -24,12 +26,19 @@ describe("ItemConsumed event", function() {
 
   	});
 
-	it("throws when it is initialized without link", function() {
+	  it("throws when it is initialized without link", function() {
  
   		expect(function() {
 	  		new ev.ItemConsumed(1, 'books', 'twilight', null);
-  		}).toThrow();
+  	  }).toThrow();
 
-	});  
+    });
+
+    it("sets a timestamp", function() {
+          
+      var e = new ev.ItemConsumed(1, 'books', 'twilight', 'http:\/\/twilight.com'); 
+      expect(e).toBeTruthy();
+
+    });
   
 });

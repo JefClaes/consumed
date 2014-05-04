@@ -59,8 +59,8 @@ describe("Dispatcher", function() {
           client.query(sql, parameters, function(err, result) {
              
             expect(result.rowCount).toEqual(0);
-            testDone();
             done();
+            testDone();
 
           });
 

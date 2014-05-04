@@ -8,7 +8,7 @@ module.exports = {
 
 			if (query.type === 'getconsumedlists') {
 
-				var sql = 'SELECT id, description, userid, category, link FROM consumed_lists ORDER BY category ASC';		
+				var sql = 'SELECT id, description, userid, category, link, timestamp FROM consumed_lists ORDER BY category ASC';		
 
 				client.query(sql, [], function(err, queryResult) {      
 
@@ -30,12 +30,17 @@ module.exports = {
 								result.categories.push({ name : queryResult.rows[i].category, items : [] }); 
 							} 
 						
+							console.log(queryResult.rows[i].timestamp);
+
 							result.categories[categoryIndex].items.push({ 
 									id : queryResult.rows[i].id, 
 									description : queryResult.rows[i].description,
-									link : queryResult.rows[i].link  
+									link : queryResult.rows[i].link,
+									timestamp: queryResult.rows[i].timestamp
 								});
 						}
+
+						console.log(result);
 
 						callback(null, result);
 						

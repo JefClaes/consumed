@@ -13,7 +13,7 @@ app.configure (function(){
     app.use(express.bodyParser());        
     app.use(expressValidator()); 
     app.use(express.cookieParser());
-    app.use(express.session({ secret : 'changeit' }));
+    app.use(express.session({ secret : 'axfdsjkqmfjkmaerauizpruzpajfx' }));
     app.use(passport.initialize());
     app.use(passport.session());
 });
@@ -21,25 +21,21 @@ app.configure (function(){
 authenticationController.init(app, passport);
 apiController.init(app, passport);
 
-app.get('/index', function(req, res) {
+app.get('/', function(req, res) {
 	res.sendfile('index.html');		
+});
+
+app.get('/index', function(req, res) {
+  res.sendfile('index.html');   
 });
 
 app.get('/lists', function(req, res) {
 	res.sendfile('lists.html');		
 });
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { 
-  	return next(); 
-  }
-  
-  res.redirect('/auth/twitter');
-}
-
 module.exports = app;
 
 if(!module.parent) {
-  	app.listen(3000);
+  app.listen(3000);
 	console.log('Listening on port 3000');
 }

@@ -20,6 +20,7 @@ module.exports = {
 		this.category = category;		
 		this.description = description;		
 		this.link = link;		
+		this.timestamp = new Date();
 
 	}
 
