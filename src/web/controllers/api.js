@@ -1,11 +1,11 @@
 var util = require('util')
+	, async = require('async')
+	, er = require('../eventsourcing.js')
+	, ev = require('../events.js')
 	, express = require('express')
 	, expressValidator = require('express-validator')
-	, async = require('async')
 	, pg = require('pg')
-	, er = require('../eventsourcing.js')
 	, pj = require('../projections.js')
-	, ev = require('../events.js')
 	, queries = require('../queries.js')
 	, config = require('../config.js');
 
@@ -21,85 +21,75 @@ module.exports = {
 			res.send(401);
 		};
 
+		var connect = function(callback) {
+			pg.connect(config.connectionstring, function(err, client, done) {  
+				if (err) {
+					callback(err, client, done);
+				} else {
+					callback(null, client, done);
+				}
+			});
+		};
+
 		var inTransaction = function(body, success, fail) {
 
-			async.waterfall([
-
-				function(callback) {
-
-					pg.connect(config.connectionstring, function(err, client, done) {   
-
-						if (err) {
-							callback(err, client, done);
-						} else {
-							callback(null, client, done);
-						}
-
-					});
-
-				},
-
-				function (client, done, callback) {
-
-					client.query('BEGIN', function(err) {
-
-						if (err) {
-							callback(err, client, done);
-						} else {
-							callback(null, client, done);
-						}
-
-					});
-
-				},
-
-				body], 
-
-				function (err, client, done) {
-
+			var begin = function (client, done, callback) {
+				client.query('BEGIN', function(err) {
 					if (err) {
-
-						client.query('ROLLBACK', function() {
-							done();     
-							fail();
-			    		});	   
-
+						callback(err, client, done);
 					} else {
-
-						client.query('COMMIT', function() {
-							done();     
-							success();
-			        	});			
-
-					}	
-
+						callback(null, client, done);
+					}
 				});
+			};
 
+			var done = function (err, client, done) {
+				if (err) {
+					client.query('ROLLBACK', function() {
+						done();     
+						fail();
+		    		});	   
+				} else {
+					client.query('COMMIT', function() {
+						done();     
+						success();
+		        	});		
+				}	
+			};
 
+			async.waterfall([connect, begin, body], done);
+
+		};
+
+		var handleResult = function(success, client, res, done, err) {
+			if (err) {
+				done();
+				res.send(500);
+			} else {
+				success(client, res, done);
+			}
 		};
 
 		app.get('/queries/consumedlists', ensureApiAuthenticated, function(req, res) {
 			res.contentType('application/json');               
 
-			pg.connect(config.connectionstring, function(err, client, done) {
+			connect(function(err, client, done) {
 
-				if (err) {
-					done();
-					res.send(500);
-				} else {
+				handleResult(function(client, res, done) {
+
 					var queryExecutor = new queries.QueryExecutor(client);
 					var userid = req.user.provider + '/' + req.user.username;
+
 					queryExecutor.execute({ type : 'getconsumedlists', userid : userid }, function(err, result) {
-						if (err) {
-							done();
-							res.send(500);
-						} else {
+
+						handleResult(function(client, res, done) {
 							done();
 							res.send(result);
-						}
-					});
-				}
+						}, client, res, done, err);
 
+					});
+
+				}, client, res, done, err);				
 			});
 
 		});

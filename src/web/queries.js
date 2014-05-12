@@ -30,8 +30,6 @@ module.exports = {
 								result.categories.push({ name : queryResult.rows[i].category, items : [] }); 
 							} 
 						
-							console.log(queryResult.rows[i].timestamp);
-
 							result.categories[categoryIndex].items.push({ 
 									id : queryResult.rows[i].id, 
 									description : queryResult.rows[i].description,
@@ -39,8 +37,6 @@ module.exports = {
 									timestamp: queryResult.rows[i].timestamp
 								});
 						}
-
-						console.log(result);
 
 						callback(null, result);
 						
