@@ -6,6 +6,8 @@ module.exports = {
 	
 		this.execute = function(query, callback) {
 
+			console.log('Executing query ' + query.type);
+
 			if (query.type === 'getconsumedlists') {
 
 				var sql = 'SELECT id, description, userid, category, link, timestamp FROM consumed_lists ORDER BY category ASC';		

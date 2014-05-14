@@ -1,5 +1,6 @@
 var util = require('util')
 	, async = require('async')
+	, db = require('../infrastructure/db.js')
 	, er = require('../eventsourcing.js')
 	, ev = require('../events.js')
 	, express = require('express')
@@ -21,46 +22,6 @@ module.exports = {
 			res.send(401);
 		};
 
-		var connect = function(callback) {
-			pg.connect(config.connectionstring, function(err, client, done) {  
-				if (err) {
-					callback(err, client, done);
-				} else {
-					callback(null, client, done);
-				}
-			});
-		};
-
-		var inTransaction = function(body, success, fail) {
-
-			var begin = function (client, done, callback) {
-				client.query('BEGIN', function(err) {
-					if (err) {
-						callback(err, client, done);
-					} else {
-						callback(null, client, done);
-					}
-				});
-			};
-
-			var done = function (err, client, done) {
-				if (err) {
-					client.query('ROLLBACK', function() {
-						done();     
-						fail();
-		    		});	   
-				} else {
-					client.query('COMMIT', function() {
-						done();     
-						success();
-		        	});		
-				}	
-			};
-
-			async.waterfall([connect, begin, body], done);
-
-		};
-
 		var handleResult = function(success, client, res, done, err) {
 			if (err) {
 				done();
@@ -73,7 +34,7 @@ module.exports = {
 		app.get('/queries/consumedlists', ensureApiAuthenticated, function(req, res) {
 			res.contentType('application/json');               
 
-			connect(function(err, client, done) {
+			db.connect(function(err, client, done) {
 
 				handleResult(function(client, res, done) {
 
@@ -107,9 +68,14 @@ module.exports = {
 		    	return;
 			}
 
-			var payload = new ev.ItemConsumed(req.user.provider + '/' + req.user.username, req.body.category, req.body.description, req.body.link);
+			var payload = new ev.ItemConsumed(
+				req.user.provider + '/' + req.user.username, 
+				req.body.category, 
+				req.body.description, 
+				req.body.link);
 		    var event = new er.WriteEvent(payload.type, payload);
-		    var eventStream = new er.EventStream('consumed/' + req.user.provider + '/' + req.user.username, [ event ]);  
+		    var eventStream = new er.EventStream(
+		    	'consumed/' + req.user.provider + '/' + req.user.username, [ event ]);  
 			
 		    var body = function (client, done, callback) {
 
@@ -136,7 +102,7 @@ module.exports = {
 		    	res.send(500);		
 		    };
 
-			inTransaction(body, success, fail);
+			db.inTransaction(body, success, fail);
 
 		});
 
