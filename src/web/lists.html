@@ -10,6 +10,7 @@
     <title>Consumed</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/consumed.css" rel="stylesheet">
    
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -19,45 +20,66 @@
 
   <body>
 
-    <div class="container-fluid">
+  <nav class="navbar navbar-fixed-top header">
+    <div class="col-md-12">
+        <div class="navbar-header">
+          
+          <a href="#" class="navbar-brand">Consumed</a>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
+          <i class="glyphicon glyphicon-search"></i>
+          </button>
+      
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse1">
+          <form class="navbar-form pull-left">
+            <div class="form-group">
+              <label class="sr-only" for="category">Category</label>
+              <input type="text" class="form-control" id="category" placeholder="Category">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="description">Description</label>
+              <input type="text" class="form-control" id="description" placeholder="Description">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="link">Link</label>
+              <input type="text" class="form-control" id="link" placeholder="Link">
+            </div>
+            <button type="button" id="consume" class="btn btn-default">Submit</button>
+          </form>          
+        </div>  
+     </div> 
+    </nav>
 
-      <div class="row">
-        <h1>Consumed</h1>
-      </div>
-
-      <div class="row">
-            
-        <form class="form-inline" role="form">
-          <div class="form-group">
-            <label class="sr-only" for="category">Category</label>
-            <input type="text" class="form-control" id="category" placeholder="Category">
-          </div>
-          <div class="form-group">
-            <label class="sr-only" for="description">Description</label>
-            <input type="text" class="form-control" id="description" placeholder="Description">
-          </div>
-          <div class="form-group">
-            <label class="sr-only" for="link">Link</label>
-            <input type="text" class="form-control" id="link" placeholder="Link">
-          </div>
-          <button type="button" id="consume" class="btn btn-default">Submit</button>
-        </form>
-
-      </div>
+  <div class="navbar navbar-default" id="subnav">
+    <div class="col-md-12">
+        <div class="navbar-header"></div>
+        <div class="collapse navbar-collapse" id="navbar-collapse2">
+          <ul class="nav navbar-nav navbar-right">
+             <li class="active"><a href="/lists">Lists</a></li>
+             <li><a href="#">History</a></li>           
+           </ul>
+        </div>  
+     </div> 
+    </div>
+    <div class="container" id="main">
 
       <div class="row" id="lists" data-bind="with: data">
 
-        <ul data-bind="foreach: categories">
-            <li>
-                <span data-bind="text: name"></span>
-                <ul data-bind="foreach: items">
-                   <li>
+        <div data-bind="foreach: categories">
+            <div class="col-md-4 col-sm-6">
+              <div class="panel panel-default">
+                <div class="panel-heading"><h4><span data-bind="text: name"></span></h4></div>
+                <div class="panel-body">                
+                  <ul class="list-group" data-bind="foreach: items">
+                    <li class="list-group-item">
                       <span data-bind="text: description"></span>
                       <span data-bind="text: timestamp"></span>
-                   </li>
-                </ul>
-            </li>
-        </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+        </div>
 
       </div>
 
@@ -95,8 +117,7 @@
             type: "POST",
             url: "/commands/consume",
             data: { "category" : category, "description" : description, "link" : link },
-            success: function() { alert("consumed!"); },
-            error: function(x, y, z) { console.log(x); console.log(y); console.log(z); alert("epic fail!"); },
+            success: function() { listModel.load(); },
             dataType: "json"
           });
 

@@ -38,7 +38,7 @@ module.exports = {
 			});
 		};
 
-		var done = function (err, client, done) {
+		var done = function (client, done, err) {
 			if (err) {
 				client.query('ROLLBACK', function() {
 					console.log('ROLLBACK');

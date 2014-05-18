@@ -48,7 +48,7 @@ describe("Running a ConsumedListProjection", function() {
 
 			var queryExecutor = new queries.QueryExecutor(client);
 
-			queryExecutor.execute({ type: 'getconsumedlists', userid: 'jef' }, function(err, result) {
+			queryExecutor.execute({ type: 'consumed_lists', userid: 'jef' }, function(err, result) {
 
 				expect(err).toEqual(null);
 

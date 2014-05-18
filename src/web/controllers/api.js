@@ -1,11 +1,9 @@
 var util = require('util')
-	, async = require('async')
 	, db = require('../infrastructure/db.js')
 	, er = require('../eventsourcing.js')
 	, ev = require('../events.js')
 	, express = require('express')
 	, expressValidator = require('express-validator')
-	, pg = require('pg')
 	, pj = require('../projections.js')
 	, queries = require('../queries.js')
 	, config = require('../config.js');
@@ -41,7 +39,7 @@ module.exports = {
 					var queryExecutor = new queries.QueryExecutor(client);
 					var userid = req.user.provider + '/' + req.user.username;
 
-					queryExecutor.execute({ type : 'getconsumedlists', userid : userid }, function(err, result) {
+					queryExecutor.execute({ type : 'consumed_lists', userid : userid }, function(err, result) {
 
 						handleResult(function(client, res, done) {
 							done();
@@ -85,9 +83,9 @@ module.exports = {
 				store.createOrAppendStream(eventStream, function(err) {
 
 					if (err) {
-						callback(err, client, done);
+						callback(client, done, err);
 					} else {
-						callback(null, client, done);
+						callback(client, done, null);
 					}
 
 				});
