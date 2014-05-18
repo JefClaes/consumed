@@ -12,6 +12,8 @@
 - This American Life: #518 - Except For That One Thing (http://www.thisamericanlife.org/radio-archives/episode/518/except-for-that-one-thing)
 - This American Life #450 - So Crazy It Just Might Work (http://www.thisamericanlife.org/radio-archives/episode/450/so-crazy-it-just-might-work)
 - VICE Podcast: 009 - Jeremy Scahill on "Dirty Wars" (http://www.vice.com/read/the-vice-podcast-show-jeremy-scahill-on-dirty-wars-and-national-security)
+- Functional Geekery Episode 1: Robert C. Martin (http://www.functionalgeekery.com/episode-1-robert-c-martin/)
+- Functional Geekery Episode 9: William E. Byrd (http://www.functionalgeekery.com/episode-9-william-e-byrd/)
 
 # iTunes University
 
