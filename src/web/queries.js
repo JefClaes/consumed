@@ -10,7 +10,7 @@ module.exports = {
 
 			if (query.type === 'consumed_lists') {
 
-				var sql = 'SELECT id, description, userid, category, link, timestamp FROM consumed_lists ORDER BY category ASC';		
+				var sql = 'SELECT id, description, userid, category, link, to_char(timestamp, \'YYYY-MM-DD\') AS timestamp FROM consumed_lists ORDER BY category ASC, timestamp DESC';		
 
 				client.query(sql, [], function(err, queryResult) {      
 

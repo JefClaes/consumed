@@ -80,8 +80,10 @@
                 <div class="panel-body">                
                   <ul class="list-group" data-bind="foreach: items">
                     <li class="list-group-item">
-                      <span data-bind="text: description"></span>
+                      <span>(</span>
                       <span data-bind="text: timestamp"></span>
+                      <span>) </span>
+                      <a data-bind="{ attr: { href: link }, text: description }"></a>                      
                     </li>
                   </ul>
                 </div>
