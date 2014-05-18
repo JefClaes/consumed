@@ -66,6 +66,13 @@ module.exports = {
 		    	return;
 			}
 
+			var allowedCategories = [ 'Books', 'Podcasts', 'Audio Books', 'Movies', 'Shows', 'Papers', 'Videos' ];
+
+			if (allowedCategories.indexOf(req.body.category) === -1) {
+				res.send(errors, 400);		
+		    	return;
+			}
+
 			var payload = new ev.ItemConsumed(
 				req.user.provider + '/' + req.user.username, 
 				req.body.category, 
