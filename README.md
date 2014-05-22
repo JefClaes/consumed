@@ -28,7 +28,8 @@
 - Code Connected Volume 1 (http://www.amazon.co.uk/Code-Connected-Volume-Learning-ZeroMQ/dp/1481262653/ref=sr_1_1?ie=UTF8&qid=1396283302&sr=8-1&keywords=code+connected+volume+1)
 - Node.js the Right Way (http://www.amazon.co.uk/Node-js-Right-Way-Server-Side-JavaScript/dp/1937785734/ref=sr_1_1?ie=UTF8&qid=1397419833&sr=8-1&keywords=node.js+the+right+way)
 - SQL Performance Explained (http://www.amazon.co.uk/SQL-Performance-Explained-Markus-Winand/dp/3950307826/ref=sr_1_1?s=books&ie=UTF8&qid=1399156807&sr=1-1&keywords=sql+performance+explained)
- 
+- You don't know JS: Scope & Closures (http://www.amazon.com/gp/product/1449335586/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449335586&linkCode=as2&tag=diofanedebyje-20&linkId=ITYV7EFTC7ISJW6W) 
+
 # Audio books
 
 - Contagious: Why Things Catch On (http://www.audible.com/pd/Business/Contagious-Audiobook/B00B91PMPM/ref=a_search_c4_1_1_srTtl?qid=1395694245&sr=1-1)
