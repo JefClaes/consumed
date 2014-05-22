@@ -10,9 +10,12 @@ module.exports = {
 
 			if (query.type === 'consumed_lists') {
 
-				var sql = 'SELECT id, description, userid, category, link, to_char(timestamp, \'YYYY-MM-DD\') AS timestamp FROM consumed_lists ORDER BY category ASC, timestamp DESC';		
+				var sql = 'SELECT id, description, userid, category, link, to_char(timestamp, \'YYYY-MM-DD\') AS timestamp ' + 
+						  'FROM consumed_lists ' + 
+						  'WHERE userid = $1 ' +
+						  'ORDER BY category ASC, timestamp DESC';		
 
-				client.query(sql, [], function(err, queryResult) {      
+				client.query(sql, [ query.userid ], function(err, queryResult) {      
 
 					if (err) {	
 						callback(err, null);
