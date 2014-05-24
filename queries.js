@@ -10,7 +10,7 @@ module.exports = {
 
 			if (query.type === 'consumed_lists') {
 
-				var sql = 'SELECT id, description, userid, category, link, to_char(timestamp, \'YYYY-MM-DD\') AS timestamp ' + 
+				var sql = 'SELECT description, userid, category, link, to_char(timestamp, \'YYYY-MM-DD\') AS timestamp, itemid ' + 
 						  'FROM consumed_lists ' + 
 						  'WHERE userid = $1 ' +
 						  'ORDER BY category ASC, timestamp DESC';		
@@ -36,10 +36,10 @@ module.exports = {
 							} 
 						
 							result.categories[categoryIndex].items.push({ 
-									id : queryResult.rows[i].id, 
 									description : queryResult.rows[i].description,
 									link : queryResult.rows[i].link,
-									timestamp: queryResult.rows[i].timestamp
+									timestamp: queryResult.rows[i].timestamp,
+									itemid: queryResult.rows[i].itemid
 								});
 						}
 

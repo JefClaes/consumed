@@ -22,8 +22,8 @@ describe("Running a ConsumedListProjection", function() {
 			var projection = new proj.ConsumedListProjection(client);
 
 			var events = [];
-			events.push(new es.WriteEvent('ItemConsumed', new ev.ItemConsumed('jef', 'movie', 'The godfather', 'http:\/\/tgf.com' )));			
-			events.push(new es.WriteEvent('ItemConsumed', new ev.ItemConsumed('jef', 'book', 'Code Connected', 'http:\/\/codeconnected.com' )));
+			events.push(new es.WriteEvent('ItemConsumed', new ev.ItemConsumed('1', 'jef', 'movie', 'The godfather', 'http:\/\/tgf.com' )));			
+			events.push(new es.WriteEvent('ItemConsumed', new ev.ItemConsumed('2', 'jef', 'book', 'Code Connected', 'http:\/\/codeconnected.com' )));
 
 			var eventStream = new es.EventStream('1', events);
 

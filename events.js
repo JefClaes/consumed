@@ -1,7 +1,10 @@
 module.exports = {
 
-	ItemConsumed : function(userId, category, description, link) {
+	ItemConsumed : function(itemId, userId, category, description, link) {
 
+		if (!itemId) {
+			throw new Error('itemId expected')
+		}
 		if (!userId) {
 			throw new Error('userId expected');
 		}
@@ -16,6 +19,7 @@ module.exports = {
 		}
 
 		this.type = 'ItemConsumed';		
+		this.itemId = itemId;
 		this.userId = userId;		
 		this.category = category;		
 		this.description = description;		

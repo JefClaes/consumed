@@ -6,7 +6,8 @@ var util = require('util')
 	, expressValidator = require('express-validator')
 	, pj = require('../projections.js')
 	, queries = require('../queries.js')
-	, config = require('../config.js');
+	, config = require('../config.js')
+	, sys = require('../infrastructure/system.js');
 
 module.exports = {
 	
@@ -73,14 +74,16 @@ module.exports = {
 		    	return;
 			}
 
+			var itemId = sys.guid();
 			var payload = new ev.ItemConsumed(
+				itemId,
 				req.user.provider + '/' + req.user.username, 
 				req.body.category, 
 				req.body.description, 
 				req.body.link);
 		    var event = new er.WriteEvent(payload.type, payload);
 		    var eventStream = new er.EventStream(
-		    	'consumed/' + req.user.provider + '/' + req.user.username, [ event ]);  
+		    	'consumeditem/' + itemId, [ event ]);  
 			
 		    var body = function (client, done, callback) {
 

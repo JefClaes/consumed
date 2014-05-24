@@ -43,7 +43,7 @@ module.exports = {
 		this.createOrAppendStream = function(eventStream, callback) {
   
 			var events = eventStream.getEvents();
-			var sql = 'INSERT INTO events (streamId, type, payload, dispatched) VALUES ($1, $2, $3, false)';
+			var sql = 'INSERT INTO events (streamId, type, payload, dispatched) VALUES ($1, $2, $3, false) RETURNING id';
 
 			async.forEach(events, function(item, callback) {
 
@@ -51,6 +51,8 @@ module.exports = {
 
 				client.query(sql, parameters, function(err, result) {							
 					
+					var eventId = result.rows[0].id;
+
 					if (err) {
 						callback(err);
 					} else {

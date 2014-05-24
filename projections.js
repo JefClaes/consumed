@@ -11,16 +11,17 @@ module.exports = {
 				if (event.getType() === 'ItemConsumed') {					
 
 					var payload = event.getPayload();
-					var sql = 'INSERT INTO consumed_lists (userid, description, category, link, timestamp) VALUES ($1, $2, $3, $4, $5)';
+					var sql = 'INSERT INTO consumed_lists (userid, description, category, link, timestamp, itemid) VALUES ($1, $2, $3, $4, $5, $6)';
 					var parameters = [ 
 						payload.userId, 
 						payload.description, 
 						payload.category,
 						payload.link,
-						payload.timestamp ];						
+						payload.timestamp,
+						payload.itemId ];						
 
 					client.query(sql, parameters, function(err, result) {							
-					
+
 						if (err) {
 							callback(err);
 						} else {
