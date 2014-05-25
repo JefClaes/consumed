@@ -13,6 +13,8 @@
 - This American Life #450 - So Crazy It Just Might Work (http://www.thisamericanlife.org/radio-archives/episode/450/so-crazy-it-just-might-work)
 - VICE Podcast: 009 - Jeremy Scahill on "Dirty Wars" (http://www.vice.com/read/the-vice-podcast-show-jeremy-scahill-on-dirty-wars-and-national-security)
 - Functional Geekery Episode 1: Robert C. Martin (http://www.functionalgeekery.com/episode-1-robert-c-martin/)
+- Functional Geekery Episode 2: Craig Andera (http://www.functionalgeekery.com/episode-2-craig-andera/)
+- Functional Geekery Episode 3: Fogus (http://www.functionalgeekery.com/episode-3-fogus/)
 - Functional Geekery Episode 9: William E. Byrd (http://www.functionalgeekery.com/episode-9-william-e-byrd/)
 
 # iTunes University
@@ -52,6 +54,8 @@
 - The Walking Dead Seaon 4 (http://www.imdb.com/title/tt1520211/?ref_=nv_sr_1)
 - Rick and Morty Season 1
 - Eastbound And Down Season 1
+- House of Cards Season 2
+
 
 # Papers
 
