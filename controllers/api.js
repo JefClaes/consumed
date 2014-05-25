@@ -37,7 +37,7 @@ module.exports = {
 				handleResult(function(client, res, done) {
 
 					var queryExecutor = new queries.QueryExecutor(client);
-					var userid = req.user.provider + '/' + req.user.username;
+					var userid = req.user.provider + '-' + req.user.username;
 
 					queryExecutor.execute({ type : 'consumed_lists', userid : userid }, function(err, result) {
 
@@ -121,7 +121,7 @@ module.exports = {
 			var itemId = sys.guid();
 			var payload = new ev.ItemConsumed(
 				itemId,
-				req.user.provider + '/' + req.user.username, 
+				req.user.provider + '-' + req.user.username, 
 				req.body.category, 
 				req.body.description, 
 				req.body.link);

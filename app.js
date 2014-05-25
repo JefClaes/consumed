@@ -2,7 +2,8 @@ var express = require('express')
 	, expressValidator = require('express-validator')
 	, passport = require('./infrastructure/passport.bootstrapper.js')
 	, authenticationController = require('./controllers/authentication.js')
-	, apiController = require('./controllers/api.js');
+	, apiController = require('./controllers/api.js')
+	, viewController = require('./controllers/views.js');
 
 var app = express();
 
@@ -19,18 +20,7 @@ app.configure (function(){
 
 authenticationController.init(app, passport);
 apiController.init(app, passport);
-
-app.get('/', function(req, res) {
-	res.sendfile('views/index.html');		
-});
-
-app.get('/index', function(req, res) {
-  res.sendfile('views/index.html');   
-});
-
-app.get('/lists', function(req, res) {
-	res.sendfile('views/lists.html');		
-});
+viewController.init(app);
 
 module.exports = app;
 
