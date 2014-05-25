@@ -45,7 +45,7 @@ module.exports = {
 			var events = eventStream.getEvents();
 			var sql = 'INSERT INTO events (streamId, type, payload, dispatched) VALUES ($1, $2, $3, false) RETURNING id';
 
-			async.forEach(events, function(item, callback) {
+			async.forEachSeries(events, function(item, callback) {
 
 				var parameters = [ eventStream.getStreamId(), item.getType(), item.getPayload() ];						
 
