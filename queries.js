@@ -36,11 +36,11 @@ module.exports = {
 							} 
 						
 							result.categories[categoryIndex].items.push({ 
-									description : queryResult.rows[i].description,
-									link : queryResult.rows[i].link,
-									timestamp: queryResult.rows[i].timestamp,
-									itemid: queryResult.rows[i].itemid
-								});
+								description : queryResult.rows[i].description,
+								link : queryResult.rows[i].link,
+								timestamp: queryResult.rows[i].timestamp,
+								itemid: queryResult.rows[i].itemid
+							});
 						}
 
 						callback(null, result);

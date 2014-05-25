@@ -16,6 +16,8 @@ app.configure (function(){
     app.use(express.session({ secret : 'axfdsjkqmfjkmaerauizpruzpajfx' }));
     app.use(passport.initialize());
     app.use(passport.session());
+    app.set('view engine', 'jade');
+	app.set('views', __dirname + '/views');
 });
 
 authenticationController.init(app, passport);
@@ -28,4 +30,5 @@ if(!module.parent) {
 	var port = Number(process.env.PORT || 5000);
   	app.listen(port);
 	console.log('Listening on port ' + port);
+	console.log('__dirname ' + __dirname)
 }
