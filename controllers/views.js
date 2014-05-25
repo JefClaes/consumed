@@ -39,6 +39,7 @@ module.exports = {
 
 						handleResult(function(client, res, done) {
 							done();
+
 							res.render('lists_by_userid', { model: result });
 						}, client, res, done, err);
 
