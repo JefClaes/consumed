@@ -54,6 +54,51 @@ module.exports = {
 
 		});
 
+		app.post('/commands/unconsume', ensureApiAuthenticated, function(req, res) {
+			res.contentType('application/json');
+
+			req.checkBody('itemid', 'Invalid itemid').notEmpty();
+
+			var errors = req.validationErrors();
+			if (errors) {
+				res.send(errors, 400);
+				return;
+			}
+
+			var itemId = req.body.itemid;
+			var payload = new ev.ItemUnconsumed(itemId);
+		    var event = new er.WriteEvent(payload.type, payload);
+		    var eventStream = new er.EventStream('consumeditem/' + itemId, [ event ]);  
+
+			var body = function (client, done, callback) {
+
+				var projections = pj.load(client);	
+				var store = new er.EventStore(client, projections);
+
+				store.createOrAppendStream(eventStream, function(err) {
+
+					if (err) {
+						callback(client, done, err);
+					} else {
+						callback(client, done, null);
+					}
+
+				});				
+				
+			};				
+
+			var success = function() {
+		    	res.send(200, { result : 'ok' });
+		    };
+
+		    var fail = function() {
+		    	res.send(500);		
+		    };
+
+			db.inTransaction(body, success, fail);
+
+		});
+
 		app.post('/commands/consume', ensureApiAuthenticated, function(req, res) {
 			res.contentType('application/json');               
 

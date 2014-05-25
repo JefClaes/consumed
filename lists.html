@@ -81,7 +81,7 @@
 
     <div class="container" id="main">
 
-      <div class="row" id="lists" data-bind="with: data">
+      <div class="row" id="lists" data-bind="with: lists">
 
         <div data-bind="foreach: categories">
             <div class="col-md-4 col-sm-6">
@@ -94,7 +94,7 @@
                       <span data-bind="text: timestamp"></span>
                       <span>) </span>
                       <a data-bind="{ attr: { href: link }, text: description }"></a>    
-                      <span data-bind="text: itemid"></span>              
+                      <input type="button" data-bind="click: $parents[2].unconsume" value="Unconsume"></span>              
                     </li>
                   </ul>
                 </div>
@@ -112,21 +112,30 @@
     <script type="text/javascript">
       $(function() {
 
-        var AjaxModel = function (url) {
+        var Model = function (url) {
           var self = this;
 
-          self.data = ko.observable();
-          self.load = function () {
+          self.lists = ko.observable();
+          self.loadLists = function () {
             $.get(url, function (data) {
-                self.data(ko.mapping.fromJS(data));
+                self.lists(ko.mapping.fromJS(data));
             });
           };
+          self.unconsume = function(item) {
+              $.ajax({
+                type: "POST",
+                url: "/commands/unconsume",
+                data: { "itemid" : item.itemid() },
+                success: function() { self.loadLists(); },
+                dataType: "json"
+              });
+          };
 
-          self.load();
+          self.loadLists();
         };
 
-        var listModel = new AjaxModel("/queries/consumedlists");
-        ko.applyBindings(listModel, document.getElementById("lists"));
+        var listModel = new Model("/queries/consumedlists");
+        ko.applyBindings(listModel);
 
         $("#consume").click(function() {
 
@@ -138,7 +147,7 @@
             type: "POST",
             url: "/commands/consume",
             data: { "category" : category, "description" : description, "link" : link },
-            success: function() { listModel.load(); },
+            success: function() { listModel.loadLists(); },
             dataType: "json"
           });
 

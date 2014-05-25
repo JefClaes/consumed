@@ -190,6 +190,14 @@ module.exports = {
 
 	EventStore : function(client, projections) {
 
+		this.getStream = function(streamId, callback) {
+
+			var repo = new module.exports.EventRepository(client);
+
+			repo.getEventStream(streamId, callback);
+
+		},
+
 		this.createOrAppendStream  = function(eventStream, callback) {
 
 			async.waterfall([				

@@ -8,9 +8,10 @@ module.exports = {
 
 			async.forEach(eventStream.getEvents(), function(event, callback) {
 
+				var payload = event.getPayload();
+
 				if (event.getType() === 'ItemConsumed') {					
 
-					var payload = event.getPayload();
 					var sql = 'INSERT INTO consumed_lists (userid, description, category, link, timestamp, itemid) VALUES ($1, $2, $3, $4, $5, $6)';
 					var parameters = [ 
 						payload.userId, 
@@ -29,6 +30,22 @@ module.exports = {
 						}
 
 					});
+				}
+
+				if (event.getType() === 'ItemUnconsumed') {
+
+					var sql = 'DELETE FROM consumed_lists WHERE itemid = $1';
+
+					client.query(sql, [payload.itemId], function(err, result) {
+
+						if (err) {
+							callback(err);
+						} else {
+							callback(null);
+						}
+
+					});
+
 				}
 			
 			}, function(err) {

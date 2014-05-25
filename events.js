@@ -26,6 +26,17 @@ module.exports = {
 		this.link = link;		
 		this.timestamp = new Date();
 
+	},
+
+	ItemUnconsumed : function(itemId) {
+
+		if (!itemId) {
+			throw new Error('itemId expected');
+		}
+
+		this.type = 'ItemUnconsumed';
+		this.itemId = itemId;
+
 	}
 
 };

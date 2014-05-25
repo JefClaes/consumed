@@ -24,6 +24,7 @@ describe("Running a ConsumedListProjection", function() {
 			var events = [];
 			events.push(new es.WriteEvent('ItemConsumed', new ev.ItemConsumed('1', 'jef', 'movie', 'The godfather', 'http:\/\/tgf.com' )));			
 			events.push(new es.WriteEvent('ItemConsumed', new ev.ItemConsumed('2', 'jef', 'book', 'Code Connected', 'http:\/\/codeconnected.com' )));
+			events.push(new es.WriteEvent('ItemUnconsumed', new ev.ItemUnconsumed('1')));
 
 			var eventStream = new es.EventStream('1', events);
 
@@ -53,7 +54,7 @@ describe("Running a ConsumedListProjection", function() {
 				expect(err).toEqual(null);
 
 				expect(result.userid).toEqual('jef');
-				expect(result.categories.length).toEqual(2);
+				expect(result.categories.length).toEqual(1);
 
 				testDone();
 
