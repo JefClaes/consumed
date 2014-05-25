@@ -30,9 +30,7 @@ module.exports = {
 						}
 
 					});
-				}
-
-				if (event.getType() === 'ItemUnconsumed') {
+				} else if (event.getType() === 'ItemUnconsumed') {
 
 					var sql = 'DELETE FROM consumed_lists WHERE itemid = $1';
 
@@ -45,6 +43,10 @@ module.exports = {
 						}
 
 					});
+
+				} else {
+
+					callback(null);
 
 				}
 			
