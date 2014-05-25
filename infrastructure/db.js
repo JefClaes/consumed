@@ -1,6 +1,6 @@
 var async = require('async')
 	, pg = require('pg')
-	, config = require('../config.js');
+	, config = require('../infrastructure/config.js');
 
 module.exports = {
 	

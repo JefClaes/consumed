@@ -1,5 +1,5 @@
 var passport = require('passport') 
-  , config = require('../config.js')
+  , config = require('../infrastructure/config.js')
 	, TwitterStrategy = require('passport-twitter').Strategy;
 
 passport.serializeUser(function(user, done) {	

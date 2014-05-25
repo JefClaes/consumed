@@ -1,4 +1,4 @@
-var ev = require('../events.js'); 
+var ev = require('../domain/events.js'); 
 
 describe("ItemConsumed event", function() {
  

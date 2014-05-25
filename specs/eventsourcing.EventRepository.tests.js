@@ -1,4 +1,4 @@
-var er = require('../eventsourcing.js'); 
+var er = require('../infrastructure/eventsourcing.js'); 
 var pg = require('pg'); 
 
 var conString = "pg://postgres:admin@localhost:5432/test";

@@ -1,12 +1,11 @@
-var util = require('util')
-	, db = require('../infrastructure/db.js')
-	, er = require('../eventsourcing.js')
-	, ev = require('../events.js')
+var db = require('../infrastructure/db.js')
+	, er = require('../infrastructure/eventsourcing.js')
+	, ev = require('../domain/events.js')
 	, express = require('express')
 	, expressValidator = require('express-validator')
 	, pj = require('../projections.js')
 	, queries = require('../queries.js')
-	, config = require('../config.js')
+	, config = require('../infrastructure/config.js')
 	, sys = require('../infrastructure/system.js');
 
 module.exports = {

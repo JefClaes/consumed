@@ -1,8 +1,8 @@
 var proj = require('../projections.js'); 
 var pg = require('pg'); 
-var ev = require('../events.js');
+var ev = require('../domain/events.js');
 var queries = require('../queries.js');
-var es = require('../eventsourcing.js');
+var es = require('../infrastructure/eventsourcing.js');
 
 var conString = "pg://postgres:admin@localhost:5432/test";
 var streamId = '2e6c13a7-cdaf-4559-8a18-a78e229587a4';
