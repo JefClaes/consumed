@@ -1,11 +1,32 @@
 doctype html
 html(lang="en")
 	head
-		title= pageTitle
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		title Consumed by #{model.userid}
+
+		link(href='/css/bootstrap.min.css', rel='stylesheet')
+		link(href='/css/consumed.css', rel='stylesheet')
 	body
-		h1 Consumed
-		p #{model.userid}
-		each category in model.categories
-			ul
-			each item in category.items
-				li #{item.description}
+		nav(class='navbar navbar-fixed-top header')
+			div(class='col-md-12')
+				div(class='navbar-header')
+					a(href='#' class='navbar-brand') Consumed by #{model.userid}
+		div(class='navbar navbar-default', id='subnav')
+			div(class='col-md-12')
+				div(class='navbar-header')
+		div(class='container', id='main')
+			div(class='row')
+				each category in model.categories
+					div(class='col-md-4 col-sm-6')
+						div(class='panel panel-default')
+							div(class='panel-heading')
+								h4 #{category.name}
+							div(class='panel-body')
+								ul(class='list-group')
+								each item in category.items
+									li(class='list-group-item')
+										span (#{item.timestamp}) 
+										a(href='#{item.link}') #{item.description}
