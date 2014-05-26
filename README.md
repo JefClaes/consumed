@@ -4,7 +4,7 @@
 - Distributed Podcast: Episode 6 - Interview with Jimmy Bogard (http://distributedpodcast.com/2011/episode-6-interview-with-jimmy-bogard)
 - Distributed Podcast: Episode 7 - Interview with Ayende Rahien (http://distributedpodcast.com/2011/episode-007-interview-with-ayende-rahien)
 - Distributed Podcast: Episode 8 - When to Avoid CQRS (http://distributedpodcast.com/2011/episode-9-when-to-avoid-cqrsclarified)
-- Distributed Podcast: Episode 12 - LMAX
+- Distributed Podcast: Episode 12 - LMAX (http://distributedpodcast.com/2012/episode-12-lmax)
 - Distributed Podcast: Episode 13 - Lucky Episode (http://distributedpodcast.com/2012/13-lucky-episode)
 - Distributed Podcast: Episode 14 - Go Accident (http://distributedpodcast.com/2014/episode-14)
 - This Developer's Life: 3.0.2 - Space (http://thisdeveloperslife.com/post/3-0-2-space)
