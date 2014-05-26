@@ -17,9 +17,6 @@
 - Functional Geekery Episode 3: Fogus (http://www.functionalgeekery.com/episode-3-fogus/)
 - Functional Geekery Episode 9: William E. Byrd (http://www.functionalgeekery.com/episode-9-william-e-byrd/)
 
-# iTunes University
-
-- Computer System Engineering: Lecture 07 - Virtualization
 
 # Books
 
@@ -52,16 +49,16 @@
 - True Detective Season 1 (http://www.imdb.com/title/tt2356777/)
 - House of Cards Season 1 (http://www.imdb.com/title/tt1856010/?ref_=nv_sr_1)
 - The Walking Dead Seaon 4 (http://www.imdb.com/title/tt1520211/?ref_=nv_sr_1)
-- Rick and Morty Season 1
-- Eastbound And Down Season 1
-- House of Cards Season 2
+- Rick and Morty Season 1 (http://www.imdb.com/title/tt2861424/episodes?season=1&ref_=tt_eps_sn_1)
+- Eastbound And Down Season 1 (http://www.imdb.com/title/tt0866442/?ref_=fn_al_tt_1)
+- House of Cards Season 2 (http://www.imdb.com/title/tt1856010/?ref_=fn_al_tt_1)
 
 
 # Papers
 
 - Anatomy of a database system (http://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0002.pdf)
-- Orleans: Distributed Virtual Actors for Programmability and Scalability 
-- Out of the tarpit
+- Orleans: Distributed Virtual Actors for Programmability and Scalability (http://research.microsoft.com/pubs/210931/orleans-msr-tr-2014-41.pdf)
+- Out of the tarpit (http://shaffner.us/cs/papers/tarpit.pdf)
 
 # Videos
 
