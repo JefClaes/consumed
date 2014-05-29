@@ -4,7 +4,7 @@
 - Distributed Podcast: Episode 6 - Interview with Jimmy Bogard (http://distributedpodcast.com/2011/episode-6-interview-with-jimmy-bogard)
 - Distributed Podcast: Episode 7 - Interview with Ayende Rahien (http://distributedpodcast.com/2011/episode-007-interview-with-ayende-rahien)
 - Distributed Podcast: Episode 8 - When to Avoid CQRS (http://distributedpodcast.com/2011/episode-9-when-to-avoid-cqrsclarified)
-- Distributed Podcast: Episode 12 - LMAX
+- Distributed Podcast: Episode 12 - LMAX (http://distributedpodcast.com/2012/episode-12-lmax)
 - Distributed Podcast: Episode 13 - Lucky Episode (http://distributedpodcast.com/2012/13-lucky-episode)
 - Distributed Podcast: Episode 14 - Go Accident (http://distributedpodcast.com/2014/episode-14)
 - This Developer's Life: 3.0.2 - Space (http://thisdeveloperslife.com/post/3-0-2-space)
@@ -17,9 +17,6 @@
 - Functional Geekery Episode 3: Fogus (http://www.functionalgeekery.com/episode-3-fogus/)
 - Functional Geekery Episode 9: William E. Byrd (http://www.functionalgeekery.com/episode-9-william-e-byrd/)
 
-# iTunes University
-
-- Computer System Engineering: Lecture 07 - Virtualization
 
 # Books
 
@@ -52,16 +49,16 @@
 - True Detective Season 1 (http://www.imdb.com/title/tt2356777/)
 - House of Cards Season 1 (http://www.imdb.com/title/tt1856010/?ref_=nv_sr_1)
 - The Walking Dead Seaon 4 (http://www.imdb.com/title/tt1520211/?ref_=nv_sr_1)
-- Rick and Morty Season 1
-- Eastbound And Down Season 1
-- House of Cards Season 2
+- Rick and Morty Season 1 (http://www.imdb.com/title/tt2861424/episodes?season=1&ref_=tt_eps_sn_1)
+- Eastbound And Down Season 1 (http://www.imdb.com/title/tt0866442/?ref_=fn_al_tt_1)
+- House of Cards Season 2 (http://www.imdb.com/title/tt1856010/?ref_=fn_al_tt_1)
 
 
 # Papers
 
 - Anatomy of a database system (http://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0002.pdf)
-- Orleans: Distributed Virtual Actors for Programmability and Scalability 
-- Out of the tarpit
+- Orleans: Distributed Virtual Actors for Programmability and Scalability (http://research.microsoft.com/pubs/210931/orleans-msr-tr-2014-41.pdf)
+- Out of the tarpit (http://shaffner.us/cs/papers/tarpit.pdf)
 
 # Videos
 
