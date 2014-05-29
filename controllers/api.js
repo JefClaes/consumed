@@ -29,14 +29,6 @@ module.exports = {
 			}
 		};
 
-		var success = function() {
-	    	res.send(200, { result : 'ok' });
-	    };
-
-	    var fail = function() {
-	    	res.send(500);		
-	    };
-
 		app.get('/queries/consumedlists', ensureApiAuthenticated, function(req, res) {
 			res.contentType('application/json');               
 
@@ -94,6 +86,14 @@ module.exports = {
 				
 			};				
 
+			var success = function() {
+	    	res.send(200, { result : 'ok' });
+		    };
+
+		    var fail = function() {
+		    	res.send(500);		
+		    };
+
 			db.inTransaction(body, success, fail);
 
 		});
@@ -144,6 +144,14 @@ module.exports = {
 
 				});
 
+			};
+
+			var success = function() {
+				res.send(200, { result : 'ok' });
+			};
+
+			var fail = function() {
+				res.send(500);		
 			};
 
 			db.inTransaction(body, success, fail);

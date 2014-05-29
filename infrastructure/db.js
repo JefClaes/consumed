@@ -41,6 +41,7 @@ module.exports = {
 		var done = function (client, done, err) {
 			if (err) {
 				client.query('ROLLBACK', function() {
+					console.log('Error: ' + err);
 					console.log('ROLLBACK');
 					done();     
 					fail();
