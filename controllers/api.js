@@ -6,56 +6,51 @@ var db = require('../infrastructure/db.js')
 	, pj = require('../projections.js')
 	, queries = require('../queries.js')
 	, config = require('../infrastructure/config.js')
-	, sys = require('../infrastructure/system.js');
+	, sys = require('../infrastructure/system.js')
+	, web = require('../infrastructure/web.js');
 
 module.exports = {
 	
 	init: function(app, passport) {
 
-		var ensureApiAuthenticated = function(req, res, next) {	
-			if (req.isAuthenticated()) { 
-				return next(); 
-			}
-
-			res.send(401);
+		var apiFilter = function() {
+			return [ web.filters.ensureApiAuthenticated, web.filters.asJson ];
 		};
 
-		var handleResult = function(success, client, res, done, err) {
-			if (err) {
-				done();
-				res.send(500);
-			} else {
-				success(client, res, done);
-			}
+		var createEventStore = function(client) {
+			var projections = pj.load(client);	
+			var store = new er.EventStore(client, projections);
+
+			return store;
 		};
 
-		app.get('/queries/consumedlists', ensureApiAuthenticated, function(req, res) {
-			res.contentType('application/json');               
+		var createQueryExecutor = function(client) {
+			return new queries.QueryExecutor(client);
+		};
 
-			db.connect(function(err, client, done) {
+	    var extractUserId = function(req) {
+	    	return req.user.provider + '-' + req.user.username;
+	    };
 
-				handleResult(function(client, res, done) {
+		app.get('/queries/consumedlists', apiFilter(), function(req, res) {
 
-					var queryExecutor = new queries.QueryExecutor(client);
-					var userid = req.user.provider + '-' + req.user.username;
+			var body = function(client, done, callback) {
+				var query = { type : 'consumed_lists', userid : extractUserId(req) };
 
-					queryExecutor.execute({ type : 'consumed_lists', userid : userid }, function(err, result) {
+				createQueryExecutor(client).execute(query, function(err, result) {
+					if (err) {
+						web.status.error(res)();
+					} else {
+						res.send(result);
+					}
+				});
+			};
 
-						handleResult(function(client, res, done) {
-							done();
-							res.send(result);
-						}, client, res, done, err);
-
-					});
-
-				}, client, res, done, err);				
-			});
+			db.inTransaction(body, web.status.ok(res), web.status.error(res));			
 
 		});
 
-		app.post('/commands/unconsume', ensureApiAuthenticated, function(req, res) {
-			res.contentType('application/json');
-
+		app.post('/commands/unconsume', apiFilter(), function(req, res) {
 			req.checkBody('itemid', 'Invalid itemid').notEmpty();
 
 			var errors = req.validationErrors();
@@ -70,37 +65,20 @@ module.exports = {
 		    var eventStream = new er.EventStream('consumeditem/' + itemId, [ event ]);  
 
 			var body = function (client, done, callback) {
-
-				var projections = pj.load(client);	
-				var store = new er.EventStore(client, projections);
-
-				store.createOrAppendStream(eventStream, function(err) {
-
+				createEventStore(client).createOrAppendStream(eventStream, function(err) {
 					if (err) {
 						callback(client, done, err);
 					} else {
 						callback(client, done, null);
 					}
-
-				});				
-				
+				});			
 			};				
 
-			var success = function() {
-	    	res.send(200, { result : 'ok' });
-		    };
-
-		    var fail = function() {
-		    	res.send(500);		
-		    };
-
-			db.inTransaction(body, success, fail);
+			db.inTransaction(body, web.status.ok(res), web.status.error(res));
 
 		});
 
-		app.post('/commands/consume', ensureApiAuthenticated, function(req, res) {
-			res.contentType('application/json');               
-
+		app.post('/commands/consume', apiFilter(), function(req, res) {
 			req.checkBody('description', 'Invalid description').notEmpty();
 			req.checkBody('category', 'Invalid category').notEmpty();
 			req.checkBody('link', 'Invalid link').notEmpty();
@@ -121,40 +99,24 @@ module.exports = {
 			var itemId = sys.guid();
 			var payload = new ev.ItemConsumed(
 				itemId,
-				req.user.provider + '-' + req.user.username, 
+				extractUserId(req), 
 				req.body.category, 
 				req.body.description, 
 				req.body.link);
 		    var event = new er.WriteEvent(payload.type, payload);
-		    var eventStream = new er.EventStream(
-		    	'consumeditem/' + itemId, [ event ]);  
+		    var eventStream = new er.EventStream('consumeditem/' + itemId, [ event ]);  
 			
-		    var body = function (client, done, callback) {
-
-				var projections = pj.load(client);	
-				var store = new er.EventStore(client, projections);
-
-				store.createOrAppendStream(eventStream, function(err) {
-
+		    var body = function (client, done, callback) {			
+				createEventStore(client).createOrAppendStream(eventStream, function(err) {
 					if (err) {
 						callback(client, done, err);
 					} else {
 						callback(client, done, null);
 					}
-
 				});
-
 			};
 
-			var success = function() {
-				res.send(200, { result : 'ok' });
-			};
-
-			var fail = function() {
-				res.send(500);		
-			};
-
-			db.inTransaction(body, success, fail);
+			db.inTransaction(body, web.status.ok(res), web.status.error(res));
 
 		});
 
