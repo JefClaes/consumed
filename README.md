@@ -34,6 +34,7 @@
 - Contagious: Why Things Catch On (http://www.audible.com/pd/Business/Contagious-Audiobook/B00B91PMPM/ref=a_search_c4_1_1_srTtl?qid=1395694245&sr=1-1)
 - Brainfluence (http://www.audible.com/pd/Business/Brainfluence-100-Ways-to-Persuade-and-Convince-Consumers-with-Neuromarketing-Audiobook/B008R2UEN6/ref=a_search_c4_1_1_srTtl?qid=1397076348&sr=1-1)
 - Notes to a software team leader (http://www.audible.com/search/ref=a_search_tseft__galileo?advsearchKeywords=notes+to+a+software+team+leader&x=0&y=0&sprefix=notes+to+a+)
+- The Toyota Way (http://www.audible.com/pd/Business/The-Toyota-Way-Audiobook/B002V0RD3Y/ref=a_search_c4_1_2_srTtl?qid=1402132831&sr=1-2)
 
 # Movies
 
@@ -61,6 +62,7 @@
 - Orleans: Distributed Virtual Actors for Programmability and Scalability (http://research.microsoft.com/pubs/210931/orleans-msr-tr-2014-41.pdf)
 - Out of the tarpit (http://shaffner.us/cs/papers/tarpit.pdf)
 - Why Functional Programming Matters (http://www.cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf)
+- A Study and Toolkit for Asynchronous Programming in C# (http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2013-016.pdf)
 
 # Videos
 
