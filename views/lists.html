@@ -49,7 +49,7 @@
               <label class="sr-only" for="link">Link</label>
               <input type="text" class="form-control" id="link" placeholder="Link">
             </div>
-            <button type="button" id="consume" class="btn btn-default">Submit</button>
+            <button type="button" id="consume" class="btn btn-primary">Consume</button>
           </form>          
         </div>  
      </div> 
@@ -87,11 +87,11 @@
                 <div class="panel-body">                
                   <ul class="list-group" data-bind="foreach: items">
                     <li class="list-group-item">
-                      <span>(</span>
+                      <a data-bind="click: $parents[2].unconsume" >x</a>              
+                      <span> (</span>
                       <span data-bind="text: timestamp"></span>
                       <span>) </span>
                       <a data-bind="{ attr: { href: link }, text: description }"></a>    
-                      <input type="button" data-bind="click: $parents[2].unconsume" value="Unconsume"></span>              
                     </li>
                   </ul>
                 </div>

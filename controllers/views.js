@@ -15,11 +15,11 @@ module.exports = {
 		};
 
 		app.get('/', function(req, res) {
-			res.sendfile('views/index.html');		
+			res.render('index');
 		});
 
 		app.get('/index', function(req, res) {
-		  res.sendfile('views/index.html');   
+		 	res.render('index');
 		});
 
 		app.get('/lists', function(req, res) {
